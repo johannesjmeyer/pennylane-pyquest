@@ -9,7 +9,7 @@ Dependencies
 
 .. highlight:: bash
 
-Plugin Name requires the following libraries be installed:
+PennyLane-PyQuest requires the following libraries be installed:
 
 * `Python <http://python.org/>`_ >=3.5
 
@@ -25,7 +25,7 @@ If you currently do not have Python 3 installed, we recommend `Anaconda for Pyth
 Installation
 ============
 
-Installation of Plugin Name, as well as all required Python packages mentioned above, can be installed via ``pip``:
+Installation of PennyLane-PyQuest, as well as all required Python packages mentioned above, can be installed via ``pip``:
 ::
 
    	$ python -m pip install plugin-name
@@ -33,7 +33,7 @@ Installation of Plugin Name, as well as all required Python packages mentioned a
 
 Make sure you are using the Python 3 version of pip.
 
-Alternatively, you can install Plugin Name from the source code by navigating to the top directory and running
+Alternatively, you can install PennyLane-PyQuest from the source code by navigating to the top directory and running
 ::
 
 	$ python setup.py install
@@ -42,7 +42,7 @@ Alternatively, you can install Plugin Name from the source code by navigating to
 Software tests
 ==============
 
-To ensure that Plugin Name is working correctly after installation, the test suite can be run by navigating to the source code folder and running
+To ensure that PennyLane-PyQuest is working correctly after installation, the test suite can be run by navigating to the source code folder and running
 ::
 
 	$ make test

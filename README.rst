@@ -1,4 +1,4 @@
-PennyLane Plugin Template
+PennyLane PyQuest Plugin
 #########################
 
 This template repository provides the boilerplate and file structure required to easily create your
@@ -7,39 +7,26 @@ own PennyLane plugin.
 See the `PennyLane Developer API documentation <https://pennylane.readthedocs.io/en/latest/API/overview.html>`_
 for more details on developing a PennyLane plugin.
 
-`Target framework <https://targetframework.readthedocs.io>`_ is a full-stack Python library
-for doing things.
+`PyQuest-cffi <https://pyquest.readthedocs.io>`_ is a Python library that connects to the high-performance mixed
+state simulator Quest.
 
 `PennyLane <https://pennylane.readthedocs.io>`_ is a machine learning library for optimization
 and automatic differentiation of hybrid quantum-classical computations.
 
-
-Features
-========
-
-* List the features provided by the plugin here. This can include:
-
-* The devices made available to PennyLane, as well as any special features of the devices
-
-* The core PennyLane operations and observables supported
-
-* Any additional operations and observables provided by the plugin
-
-
 Installation
 ============
 
-Plugin Name requires both PennyLane and Target framework. It can be installed via ``pip``:
+PennyLane-PyQuest requires both PennyLane and PyQuest-cffi. It can be installed via ``pip``:
 
 .. code-block:: bash
 
-    $ python -m pip install plugin-name
+    $ pip install git+https://www.github.com/johannesjmeyer/pennylane-pyquest
 
 
 Getting started
 ===============
 
-Once Plugin Name is installed, the provided Target Framework devices can be accessed straight
+Once PennyLane-PyQuest is installed, the provided PyQuest-cffi devices can be accessed straight
 away in PennyLane.
 
 You can instantiate these devices for PennyLane as follows:
@@ -47,7 +34,7 @@ You can instantiate these devices for PennyLane as follows:
 .. code-block:: python
 
     import pennylane as qml
-    dev1 = qml.device('pluginname.devicename', wires=2, additional_options=10)
+    dev1 = qml.device('pyquest.simulator', wires=2)
 
 These devices can then be used just like other devices for the definition and evaluation of
 QNodes within PennyLane. For more details, see the
@@ -58,18 +45,18 @@ to the PennyLane documentation.
 Contributing
 ============
 
-We welcome contributions - simply fork the Plugin Name repository, and then make a
+We welcome contributions - simply fork the PennyLane-PyQuest repository, and then make a
 `pull request <https://help.github.com/articles/about-pull-requests/>`_ containing your contribution.
 All contributers to PennyLane-SF will be listed as authors on the releases.
 
 We also encourage bug reports, suggestions for new features and enhancements, and even links to cool
-projects or applications built on PennyLane and Target Framework.
+projects or applications built on PennyLane and PyQuest-cffi.
 
 
 Authors
 =======
 
-John Smith.
+Johannes Jakob Meyer.
 
 If you are doing research using PennyLane, please cite our papers:
 
@@ -85,8 +72,8 @@ If you are doing research using PennyLane, please cite our papers:
 Support
 =======
 
-- **Source Code:** https://github.com/XanaduAI/plugin-name
-- **Issue Tracker:** https://github.com/XanaduAI/plugin-namesf/issues
+- **Source Code:** https://github.com/johannesjmeyer/pennylane-pyquest
+- **Issue Tracker:** https://github.com/johannesjmeyer/pennylane-pyquest/issues
 
 If you are having issues, please let us know by posting the issue on our GitHub issue tracker.
 
@@ -94,4 +81,4 @@ If you are having issues, please let us know by posting the issue on our GitHub 
 License
 =======
 
-Plugin Name is **free** and **open source**, released under the Apache License, Version 2.0.
+PennyLane-PyQuest is **free** and **open source**, released under the Apache License, Version 2.0.
