@@ -16,16 +16,23 @@ import pytest
 
 import numpy as np
 import pennylane_pyquest
-from pennylane_pyquest.pyquest_device import PyquestDevice
+from pennylane_pyquest import PyquestPure
 import pennylane as qml
 
 
 class TestAbstract:
     def test_apply(self):
-        dev = PyquestDevice(wires=3)
+        dev = PyquestPure(wires=2)
 
         dev.apply(
-            [qml.PauliRot(np.pi / 2, "XXY", wires=[0, 1, 2]),]
+            [ 
+                qml.BasisState(np.array([0, 1]), wires=[0, 1]),
+                #qml.PauliX(0),
+                #qml.PauliX(1),
+                #qml.CNOT(wires=[0, 1])
+            ]
         )
+
+        print(dev.state)
 
         assert False

@@ -39,6 +39,7 @@ from pennylane import QubitDevice
 import pyquest_cffi as pqc
 from ._version import __version__
 from .pyquest_operation import _OPERATIONS
+from .utils import reorder_state
 
 
 class PyquestDevice(QubitDevice):
@@ -77,13 +78,14 @@ class PyquestDevice(QubitDevice):
 
             for operation in operations:
                 if operation.name == "QubitStateVector":
+                    state = reorder_state(operation.parameters[0])
                     pqc.cheat.initStateFromAmps()(
                         context.qureg,
-                        reals=np.real(operation.parameters[0]),
-                        imags=np.imag(operation.parameters[0]),
+                        reals=np.real(state),
+                        imags=np.imag(state),
                     )
                 elif operation.name == "BasisState":
-                    state_int = int("".join(str(x) for x in operation.parameters[0]), 2)
+                    state_int = int("".join(str(x) for x in reversed(operation.parameters[0])), 2)
                     pqc.cheat.initClassicalState()(context.qureg, state=state_int)
                 else:
                     _OPERATIONS[operation.name].apply(operation, context.qureg)

@@ -42,6 +42,7 @@ Classes
 import numpy as np
 from .pyquest_device import PyquestDevice
 import pyquest_cffi as pqc
+from .utils import reorder_state
 
 
 class QuregContext:
@@ -88,7 +89,7 @@ class PyquestPure(PyquestDevice):
         return QuregContext(self.num_wires)
 
     def _get_state(self, context):
-        self._state = pqc.cheat.getStateVector()(context.qureg)
+        self._state = reorder_state(pqc.cheat.getStateVector()(context.qureg))
 
     @property
     def state(self):
