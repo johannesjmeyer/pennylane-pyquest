@@ -14,3 +14,92 @@
 import pyquest_cffi as pqc
 import pennylane as qml
 
+
+class PyquestOperation:
+    def __init__(self, converter):
+        # Takes a PL operation and makes a function that applies said function to a qreg
+        self.converter = converter
+
+    def apply(self, operation, qureg):
+        self.converter(operation)(qureg)
+
+
+_OPERATIONS = {
+    "Hadamard": PyquestOperation(
+        lambda op, qureg: pqc.ops.hadamard()(qureg=qureg, qubit=op.wires[0])
+    ),
+    "PauliX": PyquestOperation(
+        lambda op, qureg: pqc.ops.pauliX()(qureg=qureg, qubit=op.wires[0])
+    ),
+    "PauliY": PyquestOperation(
+        lambda op, qureg: pqc.ops.pauliY()(qureg=qureg, qubit=op.wires[0])
+    ),
+    "PauliZ": PyquestOperation(
+        lambda op, qureg: pqc.ops.pauliZ()(qureg=qureg, qubit=op.wires[0])
+    ),
+    "S": PyquestOperation(
+        lambda op, qureg: pqc.ops.sGate()(qureg=qureg, qubit=op.wires[0])
+    ),
+    "T": PyquestOperation(
+        lambda op, qureg: pqc.ops.tGate()(qureg=qureg, qubit=op.wires[0])
+    ),
+    "CompactUnitary": PyquestOperation(
+        lambda op, qureg: pqc.ops.compactUnitary()(
+            qureg=qureg,
+            qubit=op.wires[0],
+            alpha=op.parameters[0],
+            beta=op.parameters[1],
+        )
+    ),  # Custom
+    "PhaseShift": PyquestOperation(
+        lambda op, qureg: pqc.ops.phaseShift()(
+            qureg=qureg, qubit=op.wires[0], theta=op.parameters[0]
+        )
+    ),
+    "RotateAroundAxis": PyquestOperation(
+        lambda op, qureg: pqc.ops.rotateAroundAxis()(
+            qureg=qureg,
+            qubit=op.wires[0],
+            theta=op.parameters[0],
+            vector=op.parameters[1],
+        )
+    ),  # Custom
+    "RotateAroundSphericalAxis": PyquestOperation(
+        lambda op, qureg: pqc.ops.rotateAroundAxis()(
+            qureg=qureg,
+            qubit=op.wires[0],
+            theta=op.parameters[0],
+            spherical_theta=op.parameters[1],
+            spherical_phi=[2],
+        )
+    ),  # Custom
+    "RX": PyquestOperation(
+        lambda op, qureg: pqc.ops.rotateX()(
+            qureg=qureg, qubit=op.wires[0], theta=op.parameters[0]
+        )
+    ),
+    "RY": PyquestOperation(
+        lambda op, qureg: pqc.ops.rotateY()(
+            qureg=qureg, qubit=op.wires[0], theta=op.parameters[0]
+        )
+    ),
+    "RZ": PyquestOperation(
+        lambda op, qureg: pqc.ops.rotateZ()(
+            qureg=qureg, qubit=op.wires[0], theta=op.parameters[0]
+        )
+    ),
+    "QubitUnitary": PyquestOperation(
+        lambda op, qureg: pqc.ops.unitary()(
+            qureg=qureg, qubit=op.wires[0], matrix=op.parameters[0]
+        )
+    ),  # Only single qubit
+    "ControlledCompactUnitary": PyquestOperation(
+        lambda op, qureg: pqc.ops.compactUnitary()(
+            qureg=qureg,
+            control=op.wires[0],
+            qubit=op.wires[1],
+            alpha=op.parameters[0],
+            beta=op.parameters[1],
+        )
+    ),  # Custom
+}

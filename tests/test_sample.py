@@ -73,10 +73,14 @@ class TestSample:
         assert np.allclose(sorted(list(set(s1))), sorted(eigvals), **tol)
 
         # the analytic mean is 2*sin(theta)+0.5*cos(theta)+0.5
-        assert np.allclose(np.mean(s1), 2 * np.sin(theta) + 0.5 * np.cos(theta) + 0.5, **tol)
+        assert np.allclose(
+            np.mean(s1), 2 * np.sin(theta) + 0.5 * np.cos(theta) + 0.5, **tol
+        )
 
         # the analytic variance is 0.25*(sin(theta)-4*cos(theta))^2
-        assert np.allclose(np.var(s1), 0.25 * (np.sin(theta) - 4 * np.cos(theta)) ** 2, **tol)
+        assert np.allclose(
+            np.var(s1), 0.25 * (np.sin(theta) - 4 * np.cos(theta)) ** 2, **tol
+        )
 
     def test_sample_values_hermitian_multi_qubit(self, device, shots, tol):
         """Tests if the samples of a multi-qubit Hermitian observable returned by sample have
@@ -135,14 +139,18 @@ class TestSample:
 
         dev.pre_measure()
 
-        with pytest.raises(ValueError, match="Calling sample with n = 0 is not possible"):
+        with pytest.raises(
+            ValueError, match="Calling sample with n = 0 is not possible"
+        ):
             dev.sample("PauliZ", [0], [], n=0)
 
         if shots != 0:
             pytest.skip()
 
         # self.def.shots = 0, so this should also fail
-        with pytest.raises(ValueError, match="Calling sample with n = 0 is not possible"):
+        with pytest.raises(
+            ValueError, match="Calling sample with n = 0 is not possible"
+        ):
             dev.sample("PauliZ", [0], [])
 
     def test_sample_exception_wrong_n(self, device, shots):
@@ -157,11 +165,15 @@ class TestSample:
 
         dev.pre_measure()
 
-        with pytest.raises(ValueError, match="The number of samples must be a positive integer"):
+        with pytest.raises(
+            ValueError, match="The number of samples must be a positive integer"
+        ):
             dev.sample("PauliZ", [0], [], n=-12)
 
         # self.def.shots = 0, so this should also fail
-        with pytest.raises(ValueError, match="The number of samples must be a positive integer"):
+        with pytest.raises(
+            ValueError, match="The number of samples must be a positive integer"
+        ):
             dev.sample("PauliZ", [0], [], n=12.3)
 
 
@@ -183,7 +195,8 @@ class TestTensorSample:
         dev.apply("CNOT", wires=[1, 2], par=[])
 
         dev._obs_queue = [
-            qml.PauliX(wires=[0], do_queue=False) @ qml.PauliY(wires=[2], do_queue=False)
+            qml.PauliX(wires=[0], do_queue=False)
+            @ qml.PauliY(wires=[2], do_queue=False)
         ]
 
         for idx in range(len(dev._obs_queue)):
@@ -235,13 +248,17 @@ class TestTensorSample:
 
         res = dev.pre_measure()
 
-        s1 = dev.sample(["PauliZ", "Hadamard", "PauliY"], [[0], [1], [2]], [[], [], []])
+        s1 = dev.sample(
+            ["PauliZ", "Hadamard", "PauliY"], [[0], [1], [2]], [[], [], []]
+        )
 
         # s1 should only contain 1 and -1
         assert np.allclose(s1 ** 2, 1, **tol)
 
         mean = np.mean(s1)
-        expected = -(np.cos(varphi) * np.sin(phi) + np.sin(varphi) * np.cos(theta)) / np.sqrt(2)
+        expected = -(
+            np.cos(varphi) * np.sin(phi) + np.sin(varphi) * np.cos(theta)
+        ) / np.sqrt(2)
         assert np.allclose(mean, expected, **tol)
 
         var = np.var(s1)
@@ -276,7 +293,8 @@ class TestTensorSample:
         )
 
         dev._obs_queue = [
-            qml.PauliZ(wires=[0], do_queue=False) @ qml.Hermitian(A, wires=[1, 2], do_queue=False)
+            qml.PauliZ(wires=[0], do_queue=False)
+            @ qml.Hermitian(A, wires=[1, 2], do_queue=False)
         ]
 
         for idx in range(len(dev._obs_queue)):
@@ -295,7 +313,9 @@ class TestTensorSample:
         mean = np.mean(s1)
         expected = 0.5 * (
             -6 * np.cos(theta) * (np.cos(varphi) + 1)
-            - 2 * np.sin(varphi) * (np.cos(theta) + np.sin(phi) - 2 * np.cos(phi))
+            - 2
+            * np.sin(varphi)
+            * (np.cos(theta) + np.sin(phi) - 2 * np.cos(phi))
             + 3 * np.cos(varphi) * np.sin(phi)
             + np.sin(phi)
         )
@@ -306,11 +326,19 @@ class TestTensorSample:
             1057
             - np.cos(2 * phi)
             + 12 * (27 + np.cos(2 * phi)) * np.cos(varphi)
-            - 2 * np.cos(2 * varphi) * np.sin(phi) * (16 * np.cos(phi) + 21 * np.sin(phi))
+            - 2
+            * np.cos(2 * varphi)
+            * np.sin(phi)
+            * (16 * np.cos(phi) + 21 * np.sin(phi))
             + 16 * np.sin(2 * phi)
             - 8 * (-17 + np.cos(2 * phi) + 2 * np.sin(2 * phi)) * np.sin(varphi)
-            - 8 * np.cos(2 * theta) * (3 + 3 * np.cos(varphi) + np.sin(varphi)) ** 2
-            - 24 * np.cos(phi) * (np.cos(phi) + 2 * np.sin(phi)) * np.sin(2 * varphi)
+            - 8
+            * np.cos(2 * theta)
+            * (3 + 3 * np.cos(varphi) + np.sin(varphi)) ** 2
+            - 24
+            * np.cos(phi)
+            * (np.cos(phi) + 2 * np.sin(phi))
+            * np.sin(2 * varphi)
             - 8
             * np.cos(theta)
             * (

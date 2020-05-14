@@ -24,18 +24,25 @@ np.random.seed(42)
 # Some useful global variables
 
 # single qubit unitary matrix
-U = np.array([[0.83645892 - 0.40533293j, -0.20215326 + 0.30850569j],
-              [-0.23889780 - 0.28101519j, -0.88031770 - 0.29832709j]])
+U = np.array(
+    [
+        [0.83645892 - 0.40533293j, -0.20215326 + 0.30850569j],
+        [-0.23889780 - 0.28101519j, -0.88031770 - 0.29832709j],
+    ]
+)
 
 # two qubit unitary matrix
-U2 = np.array([[0, 1, 1, 1],
-               [1, 0, 1, -1],
-               [1, -1, 0, 1],
-               [1, 1, -1, 0]]) / np.sqrt(3)
+U2 = np.array(
+    [[0, 1, 1, 1], [1, 0, 1, -1], [1, -1, 0, 1], [1, 1, -1, 0]]
+) / np.sqrt(3)
 
 # single qubit Hermitian observable
-A = np.array([[1.02789352, 1.61296440 - 0.3498192j],
-              [1.61296440 + 0.3498192j, 1.23920938 + 0j]])
+A = np.array(
+    [
+        [1.02789352, 1.61296440 - 0.3498192j],
+        [1.61296440 + 0.3498192j, 1.23920938 + 0j],
+    ]
+)
 
 
 # ==========================================================
@@ -57,6 +64,7 @@ shortnames = [d.short_name for d in analytic_devices + hw_devices]
 # ==========================================================
 # pytest fixtures
 
+
 @pytest.fixture
 def tol(shots):
     """Numerical tolerance to be used in tests."""
@@ -74,6 +82,7 @@ def tol(shots):
 @pytest.fixture
 def init_state(scope="session"):
     """Fixture to create an n-qubit initial state"""
+
     def _init_state(n):
         state = np.random.random([2 ** n]) + np.random.random([2 ** n]) * 1j
         state /= np.linalg.norm(state)
@@ -82,7 +91,7 @@ def init_state(scope="session"):
     return _init_state
 
 
-@pytest.fixture(params=analytic_devices+hw_devices)
+@pytest.fixture(params=analytic_devices + hw_devices)
 def device(request, shots):
     """Fixture to initialize and return a PennyLane device"""
     device = request.param

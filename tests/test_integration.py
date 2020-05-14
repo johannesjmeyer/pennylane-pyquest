@@ -32,7 +32,9 @@ class TestDeviceIntegration:
 
     def test_args(self):
         """Test that the device requires correct arguments"""
-        with pytest.raises(TypeError, match="missing 1 required positional argument"):
+        with pytest.raises(
+            TypeError, match="missing 1 required positional argument"
+        ):
             qml.device("pyquest.simulator")
 
         # a hardware device will not allow shots=0

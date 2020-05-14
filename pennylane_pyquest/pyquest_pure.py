@@ -70,12 +70,23 @@ class PyquestPure(PyquestDevice):
         "SWAP": tf.SWAP,
     }
 
-    observables = {"PauliX", "PauliY", "PauliZ", "Identity", "Hadamard", "Hermitian"}
+    observables = {
+        "PauliX",
+        "PauliY",
+        "PauliZ",
+        "Identity",
+        "Hadamard",
+        "Hermitian",
+    }
 
     _circuits = {}
 
-    def __init__(self, wires, *, additional_option, shots=0, specific_option_for_pure=2):
-        super().__init__(wires, shots=shots, additional_option=additional_option)
+    def __init__(
+        self, wires, *, additional_option, shots=0, specific_option_for_pure=2
+    ):
+        super().__init__(
+            wires, shots=shots, additional_option=additional_option
+        )
         self.specific_option_for_pure = specific_option_for_pure
 
     def apply(self, operation, wires, par):

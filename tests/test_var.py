@@ -43,7 +43,9 @@ class TestVar:
         dev.pre_measure()
 
         var = dev.var("PauliZ", [0], [])
-        expected = 0.25 * (3 - np.cos(2 * theta) - 2 * np.cos(theta) ** 2 * np.cos(2 * phi))
+        expected = 0.25 * (
+            3 - np.cos(2 * theta) - 2 * np.cos(theta) ** 2 * np.cos(2 * phi)
+        )
 
         assert np.allclose(var, expected, **tol)
 
@@ -92,7 +94,8 @@ class TestTensorVar:
         dev.apply("CNOT", wires=[1, 2], par=[])
 
         dev._obs_queue = [
-            qml.PauliX(wires=[0], do_queue=False) @ qml.PauliY(wires=[2], do_queue=False)
+            qml.PauliX(wires=[0], do_queue=False)
+            @ qml.PauliY(wires=[2], do_queue=False)
         ]
         res = dev.pre_measure()
 
@@ -129,7 +132,9 @@ class TestTensorVar:
         ]
         res = dev.pre_measure()
 
-        res = dev.var(["PauliZ", "Hadamard", "PauliY"], [[0], [1], [2]], [[], [], []])
+        res = dev.var(
+            ["PauliZ", "Hadamard", "PauliY"], [[0], [1], [2]], [[], [], []]
+        )
 
         expected = (
             3
@@ -163,7 +168,8 @@ class TestTensorVar:
         )
 
         dev._obs_queue = [
-            qml.PauliZ(wires=[0], do_queue=False) @ qml.Hermitian(A, wires=[1, 2], do_queue=False)
+            qml.PauliZ(wires=[0], do_queue=False)
+            @ qml.Hermitian(A, wires=[1, 2], do_queue=False)
         ]
         res = dev.pre_measure()
 
@@ -173,11 +179,19 @@ class TestTensorVar:
             1057
             - np.cos(2 * phi)
             + 12 * (27 + np.cos(2 * phi)) * np.cos(varphi)
-            - 2 * np.cos(2 * varphi) * np.sin(phi) * (16 * np.cos(phi) + 21 * np.sin(phi))
+            - 2
+            * np.cos(2 * varphi)
+            * np.sin(phi)
+            * (16 * np.cos(phi) + 21 * np.sin(phi))
             + 16 * np.sin(2 * phi)
             - 8 * (-17 + np.cos(2 * phi) + 2 * np.sin(2 * phi)) * np.sin(varphi)
-            - 8 * np.cos(2 * theta) * (3 + 3 * np.cos(varphi) + np.sin(varphi)) ** 2
-            - 24 * np.cos(phi) * (np.cos(phi) + 2 * np.sin(phi)) * np.sin(2 * varphi)
+            - 8
+            * np.cos(2 * theta)
+            * (3 + 3 * np.cos(varphi) + np.sin(varphi)) ** 2
+            - 24
+            * np.cos(phi)
+            * (np.cos(phi) + 2 * np.sin(phi))
+            * np.sin(2 * varphi)
             - 8
             * np.cos(theta)
             * (
