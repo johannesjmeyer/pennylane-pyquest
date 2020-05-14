@@ -15,6 +15,7 @@
 import pytest
 
 import numpy as np
+import pennylane_pyquest
 from pennylane_pyquest.pyquest_device import PyquestDevice
 import pennylane as qml
 
@@ -24,11 +25,7 @@ class TestAbstract:
         dev = PyquestDevice(wires=3)
 
         dev.apply(
-            [
-                qml.PauliRot(np.pi / 2, "IIX", wires=[0, 1, 2]),
-                qml.PauliRot(np.pi / 2, "IXI", wires=[0, 1, 2]),
-                qml.PauliRot(np.pi / 2, "XII", wires=[0, 1, 2]),
-            ]
+            [qml.PauliRot(np.pi / 2, "XXY", wires=[0, 1, 2]),]
         )
 
         assert False

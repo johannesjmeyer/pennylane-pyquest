@@ -40,13 +40,6 @@ Operations
 ----------
 
 .. autosummary::
-    S
-    T
-    CCNOT
-    CPHASE
-    CSWAP
-    ISWAP
-    PSWAP
 
 
 Code details
@@ -72,6 +65,7 @@ class CompactUnitary(Operation):
     num_params = 2
     num_wires = 1
     par_domain = None
+    do_check_domain = False
 
 
 class ControlledCompactUnitary(Operation):
@@ -91,6 +85,7 @@ class ControlledCompactUnitary(Operation):
     num_params = 2
     num_wires = 2
     par_domain = None
+    do_check_domain = False
 
 
 class RotateAroundAxis(Operation):
@@ -110,6 +105,7 @@ class RotateAroundAxis(Operation):
     num_params = 2
     num_wires = 1
     par_domain = None
+    do_check_domain = False
 
 
 class RotateAroundSphericalAxis(Operation):
@@ -130,6 +126,7 @@ class RotateAroundSphericalAxis(Operation):
     num_params = 3
     num_wires = 1
     par_domain = None
+    do_check_domain = False
 
 
 class CY(Operation):
@@ -147,6 +144,7 @@ class CY(Operation):
     num_params = 0
     num_wires = 2
     par_domain = None
+    do_check_domain = False
 
 
 class SqrtSWAP(Operation):
@@ -164,6 +162,7 @@ class SqrtSWAP(Operation):
     num_params = 0
     num_wires = 2
     par_domain = None
+    do_check_domain = False
 
 
 class SqrtISWAP(Operation):
@@ -181,6 +180,7 @@ class SqrtISWAP(Operation):
     num_params = 0
     num_wires = 2
     par_domain = None
+    do_check_domain = False
 
 
 class InvSqrtISWAP(Operation):
@@ -198,6 +198,7 @@ class InvSqrtISWAP(Operation):
     num_params = 0
     num_wires = 2
     par_domain = None
+    do_check_domain = False
 
 
 class ControlledPhaseShift(Operation):
@@ -216,6 +217,7 @@ class ControlledPhaseShift(Operation):
     num_params = 1
     num_wires = 2
     par_domain = None
+    do_check_domain = False
 
 
 class ControlledRotateAroundAxis(Operation):
@@ -235,6 +237,7 @@ class ControlledRotateAroundAxis(Operation):
     num_params = 2
     num_wires = 2
     par_domain = None
+    do_check_domain = False
 
 
 class ControlledUnitary(Operation):
@@ -253,6 +256,7 @@ class ControlledUnitary(Operation):
     num_params = 1
     num_wires = 2
     par_domain = None
+    do_check_domain = False
 
 
 class MixDephasing(Operation):
@@ -271,11 +275,12 @@ class MixDephasing(Operation):
     num_params = 1
     num_wires = 1
     par_domain = None
+    do_check_domain = False
 
 
-class MixDepolarizing(Operation):
-    r"""MixDepolarizing(probability, wires)
-    MixDepolarizing channel.
+class MixDepolarising(Operation):
+    r"""MixDepolarising(probability, wires)
+    MixDepolarising channel.
 
     **Details:**
 
@@ -289,6 +294,7 @@ class MixDepolarizing(Operation):
     num_params = 1
     num_wires = 1
     par_domain = None
+    do_check_domain = False
 
 
 class MixDamping(Operation):
@@ -307,6 +313,7 @@ class MixDamping(Operation):
     num_params = 1
     num_wires = 1
     par_domain = None
+    do_check_domain = False
 
 
 class MixKrausMap(Operation):
@@ -325,3 +332,4 @@ class MixKrausMap(Operation):
     num_params = 1
     num_wires = 1
     par_domain = None
+    do_check_domain = False

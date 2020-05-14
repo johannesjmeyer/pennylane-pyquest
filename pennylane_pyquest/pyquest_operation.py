@@ -198,22 +198,22 @@ _OPERATIONS = {
         )
     ),
     "MixDephasing": PyquestOperation(
-        lambda op, qureg: pqc.errors.mixDephasing()(
+        lambda op, qureg: pqc.ops.mixDephasing()(
             qureg=qureg, qubit=op.wires[0], probability=op.parameters[0],
         )
     ),
-    "MixDepolarizing": PyquestOperation(
-        lambda op, qureg: pqc.errors.mixDepolarizing()(
+    "MixDepolarising": PyquestOperation(
+        lambda op, qureg: pqc.ops.mixDepolarising()(
             qureg=qureg, qubit=op.wires[0], probability=op.parameters[0],
         )
     ),
     "MixDamping": PyquestOperation(
-        lambda op, qureg: pqc.errors.mixDamping()(
+        lambda op, qureg: pqc.ops.mixDamping()(
             qureg=qureg, qubit=op.wires[0], probability=op.parameters[0],
         )
     ),
     "MixKrausMap": PyquestOperation(
-        lambda op, qureg: pqc.errors.mixKrausMap()(
+        lambda op, qureg: pqc.ops.mixKrausMap()(
             qureg=qureg, qubit=op.wires[0], operators=op.parameters[0],
         )
     ),

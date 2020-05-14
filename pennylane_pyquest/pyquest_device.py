@@ -56,6 +56,21 @@ class QuregContext:
         pqc.utils.destroyQuestEnv()(self.env)
 
 
+class DensityQuregContext:
+    def __init__(self, wires):
+        self.wires = wires
+
+    def __enter__(self):
+        self.env = pqc.utils.createQuestEnv()()
+        self.qureg = pqc.utils.createDensityQureg()(self.wires, env=self.env)
+
+        return self
+
+    def __exit__(self, etype, value, traceback):
+        pqc.utils.destroyQureg()(self.qureg, env=self.env)
+        pqc.utils.destroyQuestEnv()(self.env)
+
+
 class PyquestDevice(QubitDevice):
     r"""Abstract Pyquest device for PennyLane.
 
@@ -103,7 +118,7 @@ class PyquestDevice(QubitDevice):
         super().__init__(wires, shots, analytic)
 
     def apply(self, operations, rotations=None, **kwargs):
-        with QuregContext(self.num_wires) as context:
+        with DensityQuregContext(self.num_wires) as context:
             pqc.cheat.initZeroState()(qureg=context.qureg)
 
             for operation in operations:
@@ -119,5 +134,3 @@ class PyquestDevice(QubitDevice):
                     pqc.cheat.initClassicalState()(context.qureg, state=state_int)
                 else:
                     _OPERATIONS[operation.name].apply(operation, context.qureg)
-
-                print("Probs: \n", pqc.cheat.getOccupationProbability()(context.qureg))
