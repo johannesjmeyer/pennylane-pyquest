@@ -20,7 +20,7 @@ Device 1
 .. currentmodule:: pennylane_pyquest.PyquestMixed
 
 This Device implements all the :class:`~pennylane.device.Device` methods,
-for using Target Framework device/simulator as a PennyLane device.
+for using Pyquest device/simulator as a PennyLane device.
 
 It can inherit from the abstract PyquestDevice to reduce
 code duplication if needed.
@@ -41,7 +41,7 @@ Classes
 # we always import NumPy directly
 import numpy as np
 
-import TargetFramework as tf
+import TargetPyquest as tf
 
 from .framework_device import PyquestDevice
 
@@ -58,7 +58,7 @@ class PyquestMixed(PyquestDevice):
             added as needed
         specific_option_for_PyquestMixed (int): another example
     """
-    name = "Target Framework PyquestMixed for PennyLane"
+    name = "Pyquest PyquestMixed for PennyLane"
     short_name = "pennylane_pyquest.mixed"
 
     _operation_map = {

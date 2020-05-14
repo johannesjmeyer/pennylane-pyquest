@@ -19,7 +19,7 @@ Custom operations
 
 .. currentmodule:: pennylane_forest.ops
 
-Sometimes the Target Framework may accept more operations
+Sometimes the Pyquest may accept more operations
 than available by core PennyLane. The plugin can define
 these operations such that PennyLane can understand/apply them,
 and even differentiate them.

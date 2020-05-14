@@ -20,7 +20,7 @@ PyQuest Pure state
 .. currentmodule:: pennylane_pyquest.pure
 
 This Device implements all the :class:`~pennylane.device.Device` methods,
-for using Target Framework device/simulator as a PennyLane device.
+for using Pyquest device/simulator as a PennyLane device.
 
 It can inherit from the abstract PyquestDevice to reduce
 code duplication if needed.
@@ -41,7 +41,7 @@ Classes
 # we always import NumPy directly
 import numpy as np
 
-import TargetFramework as tf
+import TargetPyquest as tf
 
 from .framework_device import PyquestDevice
 
@@ -58,7 +58,7 @@ class PyquestPure(PyquestDevice):
             added as needed
         specific_option_for_pure (int): another example
     """
-    name = "Target Framework PyquestPure for PennyLane"
+    name = "Pyquest PyquestPure for PennyLane"
     short_name = "pennylane_pyquest.pure"
 
     _operation_map = {

@@ -3,17 +3,17 @@
 Plugin usage
 ############
 
-PennyLane-Plugin provides two Target Framework devices for PennyLane:
+PennyLane-Plugin provides two Pyquest devices for PennyLane:
 
-* :class:`name.pure <~PyquestPure>`: provides an PennyLane device for the Target Framework PyquestPure
+* :class:`name.pure <~PyquestPure>`: provides an PennyLane device for the Pyquest PyquestPure
 
-* :class:`name.mixed <~PyquestMixed>`: provides an PennyLane device for the Target Framework PyquestMixed
+* :class:`name.mixed <~PyquestMixed>`: provides an PennyLane device for the Pyquest PyquestMixed
 
 
 Using the devices
 =================
 
-Once Target Framework and the plugin are installed, the two Target Framework devices
+Once Pyquest and the plugin are installed, the two Pyquest devices
 can be accessed straight away in PennyLane.
 
 You can instantiate these devices in PennyLane as follows:
@@ -29,7 +29,7 @@ These devices can then be used just like other devices for the definition and ev
 Device options
 ==============
 
-The Target Framework simulators accept additional arguments beyond the PennyLane default device arguments.
+The Pyquest simulators accept additional arguments beyond the PennyLane default device arguments.
 
 List available device options here.
 

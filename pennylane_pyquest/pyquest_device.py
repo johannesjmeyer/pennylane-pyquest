@@ -19,12 +19,12 @@ Pyquest device class
 
 .. currentmodule:: pennylane_pyquest.device
 
-An abstract base class for constructing Target Framework devices for PennyLane.
+An abstract base class for constructing Pyquest devices for PennyLane.
 
 This should contain all the boilerplate for supporting PennyLane
-from the Target Framework, making it easier to create new devices.
+from the Pyquest, making it easier to create new devices.
 The abstract base class below should contain all common code required
-by the Target Framework.
+by the Pyquest.
 
 This abstract base class will not be used by the user. Add/delete
 methods and attributes below where needed.
@@ -47,13 +47,13 @@ import itertools
 # we always import NumPy directly
 import numpy as np
 
-from pennylane import Device
+from pennylane import QubitDevice
 
 from ._version import __version__
 
 
-class PyquestDevice(Device):
-    r"""Abstract Framework device for PennyLane.
+class PyquestDevice(QubitDevice):
+    r"""Abstract Pyquest device for PennyLane.
 
     Args:
         wires (int): the number of modes to initialize the device in
@@ -63,7 +63,7 @@ class PyquestDevice(Device):
         additional_option (float): as many additional arguments can be
             added as needed
     """
-    name = 'Target Framework Simulator PennyLane plugin'
+    name = 'Pyquest Simulator PennyLane plugin'
     pennylane_requires = '>=0.4.0'
     version = __version__
     author = 'John Smith'

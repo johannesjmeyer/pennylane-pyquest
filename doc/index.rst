@@ -1,11 +1,11 @@
-PennyLane Target Framework Plugin
+PennyLane Pyquest Plugin
 #################################
 
 :Release: |release|
 :Date: |today|
 
 
-This PennyLane plugin allows the Target Framework simulators/hardware to be used as PennyLane devices.
+This PennyLane plugin allows the Pyquest simulators/hardware to be used as PennyLane devices.
 
 
 `Target framework <https://targetframework.readthedocs.io>`_ is a full-stack Python library
