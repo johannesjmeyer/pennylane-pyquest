@@ -1,4 +1,4 @@
-# Copyright 2019 Xanadu Quantum Technologies Inc.
+# Copyright 2020 Johannes Jakob Meyer
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -38,6 +38,8 @@ import numpy as np
 from pennylane import QubitDevice
 import pyquest_cffi as pqc
 from ._version import __version__
+import pyquest_operation as pqo
+
 
 class QuregContext:
     def __init__(self, wires):
@@ -75,6 +77,14 @@ class PyquestDevice(QubitDevice):
 
     def __init__(self, wires, *, shots=1000, analytic=True):
         super().__init__(wires, shots, analytic)
-        
 
     def apply(self, operations, rotations=None, **kwargs):
+        with QuregContext(self.wires) as context:
+            for operation in operations:
+                print("Applying {}".format(operation.name))
+                pqo._ALL[operation.name].apply(operation, context.qureg)
+
+        state = pqc.cheat.getStateVector()(context.qureg)
+
+        print("Output state: \n", state)
+
