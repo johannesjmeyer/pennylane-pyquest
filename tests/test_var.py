@@ -23,7 +23,7 @@ from conftest import U, U2, A
 np.random.seed(42)
 
 
-@pytest.mark.parametrize("shots", [0, 8192])
+@pytest.mark.parametrize("shots", [1000, 8192])
 class TestVar:
     """Tests for the variance"""
 
@@ -76,7 +76,7 @@ class TestVar:
         assert np.allclose(var, expected, **tol)
 
 
-@pytest.mark.parametrize("shots", [0, 8192])
+@pytest.mark.parametrize("shots", [1000, 8192])
 class TestTensorVar:
     """Tests for variance of tensor observables"""
 

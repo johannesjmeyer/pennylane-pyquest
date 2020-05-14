@@ -39,6 +39,7 @@ Classes
 """
 import numpy as np
 from .pyquest_device import PyquestDevice
+import pyquest_cffi as pqc
 
 
 class DensityQuregContext:
@@ -88,3 +89,14 @@ class PyquestMixed(PyquestDevice):
 
     def _qureg_context(self):
         return DensityQuregContext(self.num_wires)
+
+    def _get_state(self, context):
+        self._density_matrix = pqc.cheat.getDensityMatrix()(context.qureg)
+
+    @property
+    def state(self):
+        return None
+
+    @property
+    def density_matrix(self):
+        return self._density_matrix

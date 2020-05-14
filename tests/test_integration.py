@@ -44,7 +44,7 @@ class TestDeviceIntegration:
         qml.device("pyquest.simulator", wires=1, shots=0)
 
     @pytest.mark.parametrize("d", shortnames)
-    @pytest.mark.parametrize("shots", [0, 8192])
+    @pytest.mark.parametrize("shots", [1000, 8192])
     def test_one_qubit_circuit(self, shots, d, backend, tol):
         """Test that devices provide correct result for a simple circuit"""
         if backend not in state_backends and shots == 0:

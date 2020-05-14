@@ -41,6 +41,7 @@ Classes
 # we always import NumPy directly
 import numpy as np
 from .pyquest_device import PyquestDevice
+import pyquest_cffi as pqc
 
 
 class QuregContext:
@@ -59,7 +60,6 @@ class QuregContext:
 
 
 class PyquestPure(PyquestDevice):
-
     operations = {
         "BasisState",
         "QubitStateVector",
@@ -86,3 +86,10 @@ class PyquestPure(PyquestDevice):
 
     def _qureg_context(self):
         return QuregContext(self.num_wires)
+
+    def _get_state(self, context):
+        self._state = pqc.cheat.getStateVector()(context.qureg)
+
+    @property
+    def state(self):
+        return self._state

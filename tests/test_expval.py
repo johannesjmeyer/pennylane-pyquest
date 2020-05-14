@@ -23,7 +23,7 @@ from conftest import U, U2, A
 np.random.seed(42)
 
 
-@pytest.mark.parametrize("shots", [0, 8192])
+@pytest.mark.parametrize("shots", [1000, 8192])
 class TestExpval:
     """Test expectation values"""
 
@@ -223,7 +223,7 @@ class TestExpval:
         assert np.allclose(res, expected, **tol)
 
 
-@pytest.mark.parametrize("shots", [0, 8192])
+@pytest.mark.parametrize("shots", [1000, 8192])
 class TestTensorExpval:
     """Test tensor expectation values"""
 
