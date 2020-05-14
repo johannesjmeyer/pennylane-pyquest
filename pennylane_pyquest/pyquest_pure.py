@@ -43,5 +43,46 @@ import numpy as np
 from .pyquest_device import PyquestDevice
 
 
+class QuregContext:
+    def __init__(self, wires):
+        self.wires = wires
+
+    def __enter__(self):
+        self.env = pqc.utils.createQuestEnv()()
+        self.qureg = pqc.utils.createQureg()(self.wires, env=self.env)
+
+        return self
+
+    def __exit__(self, etype, value, traceback):
+        pqc.utils.destroyQureg()(self.qureg, env=self.env)
+        pqc.utils.destroyQuestEnv()(self.env)
+
+
 class PyquestPure(PyquestDevice):
-    pass
+
+    operations = {
+        "BasisState",
+        "QubitStateVector",
+        "QubitUnitary",
+        "PauliX",
+        "PauliY",
+        "PauliZ",
+        "MultiRZ",
+        "PauliRot",
+        "Hadamard",
+        "S",
+        "T",
+        "CNOT",
+        "SWAP",
+        "CZ",
+        "PhaseShift",
+        "RX",
+        "RY",
+        "RZ",
+        "CRX",
+        "CRY",
+        "CRZ",
+    }
+
+    def _qureg_context(self):
+        return QuregContext(self.num_wires)

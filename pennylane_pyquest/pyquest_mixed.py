@@ -37,11 +37,54 @@ Classes
 
 ----
 """
-
-# we always import NumPy directly
 import numpy as np
 from .pyquest_device import PyquestDevice
 
 
+class DensityQuregContext:
+    def __init__(self, wires):
+        self.wires = wires
+
+    def __enter__(self):
+        self.env = pqc.utils.createQuestEnv()()
+        self.qureg = pqc.utils.createDensityQureg()(self.wires, env=self.env)
+
+        return self
+
+    def __exit__(self, etype, value, traceback):
+        pqc.utils.destroyQureg()(self.qureg, env=self.env)
+        pqc.utils.destroyQuestEnv()(self.env)
+
+
 class PyquestMixed(PyquestDevice):
-    pass
+
+    operations = {
+        "BasisState",
+        "QubitStateVector",
+        "QubitUnitary",
+        "PauliX",
+        "PauliY",
+        "PauliZ",
+        "MultiRZ",
+        "PauliRot",
+        "Hadamard",
+        "S",
+        "T",
+        "CNOT",
+        "SWAP",
+        "CZ",
+        "PhaseShift",
+        "RX",
+        "RY",
+        "RZ",
+        "CRX",
+        "CRY",
+        "CRZ",
+        "MixDephasing",
+        "MixDepolarising",
+        "MixDamping",
+        "MixKrausMap",
+    }
+
+    def _qureg_context(self):
+        return DensityQuregContext(self.num_wires)
