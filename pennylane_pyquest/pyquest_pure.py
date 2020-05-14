@@ -58,8 +58,8 @@ class PyquestPure(PyquestDevice):
             added as needed
         specific_option_for_pure (int): another example
     """
-    name = "Pyquest PyquestPure for PennyLane"
-    short_name = "pennylane_pyquest.pure"
+    name = "Pure state Pyquest device for PennyLane"
+    short_name = "pyquest.pure"
 
     _operation_map = {
         "PauliX": tf.X,

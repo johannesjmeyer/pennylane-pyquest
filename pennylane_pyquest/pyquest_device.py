@@ -64,11 +64,11 @@ class PyquestDevice(QubitDevice):
             added as needed
     """
     name = 'Pyquest Simulator PennyLane plugin'
-    pennylane_requires = '>=0.4.0'
+    pennylane_requires = '>=0.8.0'
     version = __version__
-    author = 'John Smith'
+    author = 'Johannes Jakob Meyer'
 
-    short_name = 'framework'
+    short_name = 'pyquest.base'
     _operation_map = {}
 
     def __init__(self, wires, *, shots=0, additional_option=2):

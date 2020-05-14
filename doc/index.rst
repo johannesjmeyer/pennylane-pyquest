@@ -34,7 +34,7 @@ To get started with the PennyLane Strawberry Fields plugin, follow the :ref:`ins
 Authors
 =======
 
-John Smith.
+Johannes Jakob Meyer.
 
 If you are doing research using PennyLane, please cite our papers:
 

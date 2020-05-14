@@ -58,8 +58,8 @@ class PyquestMixed(PyquestDevice):
             added as needed
         specific_option_for_PyquestMixed (int): another example
     """
-    name = "Pyquest PyquestMixed for PennyLane"
-    short_name = "pennylane_pyquest.mixed"
+    name = "Mixed State Pyquest device for PennyLane"
+    short_name = "pyquest.mixed"
 
     _operation_map = {
         "PauliX": tf.X,
