@@ -38,7 +38,7 @@ import numpy as np
 from pennylane import QubitDevice
 import pyquest_cffi as pqc
 from ._version import __version__
-import pyquest_operation as pqo
+from .pyquest_operation import _OPERATIONS
 
 
 class QuregContext:
@@ -47,13 +47,13 @@ class QuregContext:
 
     def __enter__(self):
         self.env = pqc.utils.createQuestEnv()()
-        self.qureg = pqc.utils.createQureg()(wires, env=env)
+        self.qureg = pqc.utils.createQureg()(self.wires, env=self.env)
 
         return self
 
-    def __exit__():
-        pqc.utils.destroyQureg(self.qureg, env=self.env)
-        pqc.utils.destroyQuestEng(self.env)
+    def __exit__(self, etype, value, traceback):
+        pqc.utils.destroyQureg()(self.qureg, env=self.env)
+        pqc.utils.destroyQuestEnv()(self.env)
 
 
 class PyquestDevice(QubitDevice):
@@ -67,24 +67,57 @@ class PyquestDevice(QubitDevice):
         additional_option (float): as many additional arguments can be
             added as needed
     """
-    name = 'Pyquest Simulator PennyLane plugin'
-    pennylane_requires = '>=0.8.0'
+    name = "Pyquest Simulator PennyLane plugin"
+    pennylane_requires = ">=0.8.0"
     version = __version__
-    author = 'Johannes Jakob Meyer'
+    author = "Johannes Jakob Meyer"
 
-    short_name = 'pyquest.base'
+    short_name = "pyquest.base"
     _operation_map = {}
+
+    operations = {
+        "BasisState",
+        "QubitStateVector",
+        "QubitUnitary",
+        "PauliX",
+        "PauliY",
+        "PauliZ",
+        "MultiRZ",
+        "PauliRot",
+        "Hadamard",
+        "S",
+        "T",
+        "CNOT",
+        "SWAP",
+        "CZ",
+        "PhaseShift",
+        "RX",
+        "RY",
+        "RZ",
+        "CRX",
+        "CRY",
+        "CRZ",
+    }
 
     def __init__(self, wires, *, shots=1000, analytic=True):
         super().__init__(wires, shots, analytic)
 
     def apply(self, operations, rotations=None, **kwargs):
-        with QuregContext(self.wires) as context:
+        with QuregContext(self.num_wires) as context:
+            pqc.cheat.initZeroState()(qureg=context.qureg)
+
             for operation in operations:
                 print("Applying {}".format(operation.name))
-                pqo._ALL[operation.name].apply(operation, context.qureg)
+                if operation.name == "QubitStateVector":
+                    pqc.cheat.initStateFromAmps()(
+                        context.qureg,
+                        reals=np.real(operation.parameters[0]),
+                        imags=np.imag(operation.parameters[0]),
+                    )
+                elif operation.name == "BasisState":
+                    state_int = int("".join(str(x) for x in operation.parameters[0]), 2)
+                    pqc.cheat.initClassicalState()(context.qureg, state=state_int)
+                else:
+                    _OPERATIONS[operation.name].apply(operation, context.qureg)
 
-        state = pqc.cheat.getStateVector()(context.qureg)
-
-        print("Output state: \n", state)
-
+                print("Probs: \n", pqc.cheat.getOccupationProbability()(context.qureg))

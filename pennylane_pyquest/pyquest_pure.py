@@ -40,63 +40,8 @@ Classes
 
 # we always import NumPy directly
 import numpy as np
-
-import TargetPyquest as tf
-
-from .framework_device import PyquestDevice
+from .pyquest_device import PyquestDevice
 
 
 class PyquestPure(PyquestDevice):
-    r"""PyquestPure for PennyLane.
-
-    Args:
-        wires (int): the number of modes to initialize the device in
-        shots (int): Number of circuit evaluations/random samples used
-            to estimate expectation values of observables.
-            For simulator devices, 0 means the exact EV is returned.
-        additional_option (float): as many additional arguments can be
-            added as needed
-        specific_option_for_pure (int): another example
-    """
-    name = "Pure state Pyquest device for PennyLane"
-    short_name = "pyquest.pure"
-
-    _operation_map = {
-        "PauliX": tf.X,
-        "PauliY": tf.Y,
-        "PauliZ": tf.Z,
-        "Hadamard": tf.H,
-        "CNOT": tf.CNOT,
-        "SWAP": tf.SWAP,
-    }
-
-    observables = {
-        "PauliX",
-        "PauliY",
-        "PauliZ",
-        "Identity",
-        "Hadamard",
-        "Hermitian",
-    }
-
-    _circuits = {}
-
-    def __init__(
-        self, wires, *, additional_option, shots=0, specific_option_for_pure=2
-    ):
-        super().__init__(
-            wires, shots=shots, additional_option=additional_option
-        )
-        self.specific_option_for_pure = specific_option_for_pure
-
-    def apply(self, operation, wires, par):
-        pass
-
-    def expval(self, observable, wires, par):
-        pass
-
-    def var(self, observable, wires, par):
-        pass
-
-    def sample(self, observable, wires, par, n=None):
-        pass
+    pass

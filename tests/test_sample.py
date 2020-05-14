@@ -248,9 +248,7 @@ class TestTensorSample:
 
         res = dev.pre_measure()
 
-        s1 = dev.sample(
-            ["PauliZ", "Hadamard", "PauliY"], [[0], [1], [2]], [[], [], []]
-        )
+        s1 = dev.sample(["PauliZ", "Hadamard", "PauliY"], [[0], [1], [2]], [[], [], []])
 
         # s1 should only contain 1 and -1
         assert np.allclose(s1 ** 2, 1, **tol)
@@ -313,9 +311,7 @@ class TestTensorSample:
         mean = np.mean(s1)
         expected = 0.5 * (
             -6 * np.cos(theta) * (np.cos(varphi) + 1)
-            - 2
-            * np.sin(varphi)
-            * (np.cos(theta) + np.sin(phi) - 2 * np.cos(phi))
+            - 2 * np.sin(varphi) * (np.cos(theta) + np.sin(phi) - 2 * np.cos(phi))
             + 3 * np.cos(varphi) * np.sin(phi)
             + np.sin(phi)
         )
@@ -332,13 +328,8 @@ class TestTensorSample:
             * (16 * np.cos(phi) + 21 * np.sin(phi))
             + 16 * np.sin(2 * phi)
             - 8 * (-17 + np.cos(2 * phi) + 2 * np.sin(2 * phi)) * np.sin(varphi)
-            - 8
-            * np.cos(2 * theta)
-            * (3 + 3 * np.cos(varphi) + np.sin(varphi)) ** 2
-            - 24
-            * np.cos(phi)
-            * (np.cos(phi) + 2 * np.sin(phi))
-            * np.sin(2 * varphi)
+            - 8 * np.cos(2 * theta) * (3 + 3 * np.cos(varphi) + np.sin(varphi)) ** 2
+            - 24 * np.cos(phi) * (np.cos(phi) + 2 * np.sin(phi)) * np.sin(2 * varphi)
             - 8
             * np.cos(theta)
             * (

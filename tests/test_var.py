@@ -132,9 +132,7 @@ class TestTensorVar:
         ]
         res = dev.pre_measure()
 
-        res = dev.var(
-            ["PauliZ", "Hadamard", "PauliY"], [[0], [1], [2]], [[], [], []]
-        )
+        res = dev.var(["PauliZ", "Hadamard", "PauliY"], [[0], [1], [2]], [[], [], []])
 
         expected = (
             3
@@ -185,13 +183,8 @@ class TestTensorVar:
             * (16 * np.cos(phi) + 21 * np.sin(phi))
             + 16 * np.sin(2 * phi)
             - 8 * (-17 + np.cos(2 * phi) + 2 * np.sin(2 * phi)) * np.sin(varphi)
-            - 8
-            * np.cos(2 * theta)
-            * (3 + 3 * np.cos(varphi) + np.sin(varphi)) ** 2
-            - 24
-            * np.cos(phi)
-            * (np.cos(phi) + 2 * np.sin(phi))
-            * np.sin(2 * varphi)
+            - 8 * np.cos(2 * theta) * (3 + 3 * np.cos(varphi) + np.sin(varphi)) ** 2
+            - 24 * np.cos(phi) * (np.cos(phi) + 2 * np.sin(phi)) * np.sin(2 * varphi)
             - 8
             * np.cos(theta)
             * (

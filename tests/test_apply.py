@@ -143,9 +143,7 @@ class TestStateApply:
             dev.apply("QubitStateVector", [0, 1], [state])
 
     @pytest.mark.parametrize("name,mat", single_qubit)
-    def test_single_qubit_no_parameters(
-        self, init_state, device, name, mat, tol
-    ):
+    def test_single_qubit_no_parameters(self, init_state, device, name, mat, tol):
         """Test PauliX application"""
         dev = device(1)
         state = init_state(1)
@@ -161,9 +159,7 @@ class TestStateApply:
 
     @pytest.mark.parametrize("theta", [0.5432, -0.232])
     @pytest.mark.parametrize("name,func", single_qubit_param)
-    def test_single_qubit_parameters(
-        self, init_state, device, name, func, theta, tol
-    ):
+    def test_single_qubit_parameters(self, init_state, device, name, func, theta, tol):
         """Test PauliX application"""
         dev = device(1)
         state = init_state(1)
@@ -231,15 +227,11 @@ class TestStateApply:
         dev = device(2)
         state = np.array([[0, 123.432], [-0.432, 023.4]])
 
-        with pytest.raises(
-            ValueError, match=r"Unitary matrix must be of shape"
-        ):
+        with pytest.raises(ValueError, match=r"Unitary matrix must be of shape"):
             dev.apply("QubitUnitary", [0, 1], [state])
 
     @pytest.mark.parametrize("name, mat", three_qubit)
-    def test_three_qubit_no_parameters(
-        self, init_state, device, name, mat, tol
-    ):
+    def test_three_qubit_no_parameters(self, init_state, device, name, mat, tol):
         dev = device(3)
         state = init_state(3)
 
@@ -254,9 +246,7 @@ class TestStateApply:
 
     @pytest.mark.parametrize("theta", [0.5432, -0.232])
     @pytest.mark.parametrize("name,func", two_qubit_param)
-    def test_single_qubit_parameters(
-        self, init_state, device, name, func, theta, tol
-    ):
+    def test_single_qubit_parameters(self, init_state, device, name, func, theta, tol):
         """Test PauliX application"""
         dev = device(2)
         state = init_state(2)
@@ -284,9 +274,7 @@ class TestHardwareApply:
         dev._obs_queue = []
         dev.pre_measure()
 
-        res = np.fromiter(
-            dev.probabilities(wires=range(4)).values(), dtype=np.float64
-        )
+        res = np.fromiter(dev.probabilities(wires=range(4)).values(), dtype=np.float64)
 
         expected = np.zeros([2 ** 4])
         expected[np.ravel_multi_index(state, [2] * 4)] = 1
@@ -331,9 +319,7 @@ class TestHardwareApply:
             dev.apply("QubitStateVector", [0, 1], [state])
 
     @pytest.mark.parametrize("name,mat", single_qubit)
-    def test_single_qubit_no_parameters(
-        self, init_state, device, name, mat, tol
-    ):
+    def test_single_qubit_no_parameters(self, init_state, device, name, mat, tol):
         """Test PauliX application"""
         dev = device(1)
         state = init_state(1)
@@ -349,9 +335,7 @@ class TestHardwareApply:
 
     @pytest.mark.parametrize("theta", [0.5432, -0.232])
     @pytest.mark.parametrize("name,func", single_qubit_param)
-    def test_single_qubit_parameters(
-        self, init_state, device, name, func, theta, tol
-    ):
+    def test_single_qubit_parameters(self, init_state, device, name, func, theta, tol):
         """Test PauliX application"""
         dev = device(1)
         state = init_state(1)
@@ -419,15 +403,11 @@ class TestHardwareApply:
         dev = device(2)
         state = np.array([[0, 123.432], [-0.432, 023.4]])
 
-        with pytest.raises(
-            ValueError, match=r"Unitary matrix must be of shape"
-        ):
+        with pytest.raises(ValueError, match=r"Unitary matrix must be of shape"):
             dev.apply("QubitUnitary", [0, 1], [state])
 
     @pytest.mark.parametrize("name, mat", three_qubit)
-    def test_three_qubit_no_parameters(
-        self, init_state, device, name, mat, tol
-    ):
+    def test_three_qubit_no_parameters(self, init_state, device, name, mat, tol):
         dev = device(3)
         state = init_state(3)
 
@@ -442,9 +422,7 @@ class TestHardwareApply:
 
     @pytest.mark.parametrize("theta", [0.5432, -0.232])
     @pytest.mark.parametrize("name,func", two_qubit_param)
-    def test_single_qubit_parameters(
-        self, init_state, device, name, func, theta, tol
-    ):
+    def test_single_qubit_parameters(self, init_state, device, name, func, theta, tol):
         """Test PauliX application"""
         dev = device(2)
         state = init_state(2)

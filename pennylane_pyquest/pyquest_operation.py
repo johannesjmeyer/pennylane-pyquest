@@ -14,13 +14,16 @@
 import pyquest_cffi as pqc
 import pennylane as qml
 
-_PAULI_TO_INT_DICT = {"I" : 0, "X" : 1, "Y" : 2, "Z" : 3}
+_PAULI_TO_INT_DICT = {"I": 0, "X": 1, "Y": 2, "Z": 3}
+
+
 def _pauli_to_int(paulis):
     ints = []
     for pauli in paulis:
         ints.append(_PAULI_TO_INT_DICT[pauli])
 
     return ints
+
 
 class PyquestOperation:
     def __init__(self, converter):
@@ -111,61 +114,44 @@ _OPERATIONS = {
     ),  # Custom
     "CNOT": PyquestOperation(
         lambda op, qureg: pqc.ops.controlledNot()(
-            qureg=qureg,
-            control=op.wires[0],
-            qubit=op.wires[1],
+            qureg=qureg, control=op.wires[0], qubit=op.wires[1],
         )
     ),
     "CY": PyquestOperation(
         lambda op, qureg: pqc.ops.controlledPauliY()(
-            qureg=qureg,
-            control=op.wires[0],
-            qubit=op.wires[1],
+            qureg=qureg, control=op.wires[0], qubit=op.wires[1],
         )
     ),  # Custom
     "CZ": PyquestOperation(
         lambda op, qureg: pqc.ops.controlledPhaseFlip()(
-            qureg=qureg,
-            control=op.wires[0],
-            qubit=op.wires[1],
+            qureg=qureg, control=op.wires[0], qubit=op.wires[1],
         )
     ),
     "SWAP": PyquestOperation(
         lambda op, qureg: pqc.ops.swapGate()(
-            qureg=qureg,
-            control=op.wires[0],
-            qubit=op.wires[1],
+            qureg=qureg, control=op.wires[0], qubit=op.wires[1],
         )
     ),
     "SqrtSWAP": PyquestOperation(
         lambda op, qureg: pqc.ops.sqrtSwapGate()(
-            qureg=qureg,
-            control=op.wires[0],
-            qubit=op.wires[1],
+            qureg=qureg, control=op.wires[0], qubit=op.wires[1],
         )
-    ), # Custom
+    ),  # Custom
     "SqrtISWAP": PyquestOperation(
         lambda op, qureg: pqc.ops.sqrtISwap()(
-            qureg=qureg,
-            control=op.wires[0],
-            qubit=op.wires[1],
+            qureg=qureg, control=op.wires[0], qubit=op.wires[1],
         )
-    ), # Custom
+    ),  # Custom
     "InvSqrtISWAP": PyquestOperation(
         lambda op, qureg: pqc.ops.invSqrtISwap()(
-            qureg=qureg,
-            control=op.wires[0],
-            qubit=op.wires[1],
+            qureg=qureg, control=op.wires[0], qubit=op.wires[1],
         )
-    ), # Custom
+    ),  # Custom
     "ControlledPhaseShift": PyquestOperation(
         lambda op, qureg: pqc.ops.controlledPhaseShift()(
-            qureg=qureg,
-            control=op.wires[0],
-            qubit=op.wires[1],
-            theta=op.parameters[0],
+            qureg=qureg, control=op.wires[0], qubit=op.wires[1], theta=op.parameters[0],
         )
-    ), # Custom
+    ),  # Custom
     "ControlledRotateAroundAxis": PyquestOperation(
         lambda op, qureg: pqc.ops.controlledRotateAroundAxis()(
             qureg=qureg,
@@ -174,29 +160,20 @@ _OPERATIONS = {
             theta=op.parameters[0],
             vector=op.parameters[1],
         )
-    ), # Custom
+    ),  # Custom
     "CRX": PyquestOperation(
         lambda op, qureg: pqc.ops.controlledRotateX()(
-            qureg=qureg,
-            control=op.wires[0],
-            qubit=op.wires[1],
-            theta=op.parameters[0],
+            qureg=qureg, control=op.wires[0], qubit=op.wires[1], theta=op.parameters[0],
         )
     ),
     "CRY": PyquestOperation(
         lambda op, qureg: pqc.ops.controlledRotateY()(
-            qureg=qureg,
-            control=op.wires[0],
-            qubit=op.wires[1],
-            theta=op.parameters[0],
+            qureg=qureg, control=op.wires[0], qubit=op.wires[1], theta=op.parameters[0],
         )
     ),
     "CRZ": PyquestOperation(
         lambda op, qureg: pqc.ops.controlledRotateZ()(
-            qureg=qureg,
-            control=op.wires[0],
-            qubit=op.wires[1],
-            theta=op.parameters[0],
+            qureg=qureg, control=op.wires[0], qubit=op.wires[1], theta=op.parameters[0],
         )
     ),
     "ControlledUnitary": PyquestOperation(
@@ -206,53 +183,38 @@ _OPERATIONS = {
             qubit=op.wires[1],
             matrix=op.parameters[0],
         )
-    ), # Custom
+    ),  # Custom
     "MultiRZ": PyquestOperation(
-        lambda op, qureg: pqc.ops.controlledRotateZ()(
-            qureg=qureg,
-            qubits=op.wires,
-            angle=op.parameters[0],
+        lambda op, qureg: pqc.ops.multiRotateZ()(
+            qureg=qureg, qubits=op.wires, angle=op.parameters[0],
         )
     ),
     "PauliRot": PyquestOperation(
-        lambda op, qureg: pqc.ops.controlledRotateZ()(
+        lambda op, qureg: pqc.ops.multiRotatePauli()(
             qureg=qureg,
             qubits=op.wires,
-            paulis=_pauli_to_int(p.parameters[0]),
-            angle=op.parameters[1],
+            paulis=_pauli_to_int(op.parameters[1]),
+            angle=op.parameters[0],
         )
     ),
-}
-
-_ERRORS = {
-    "MixDephasing" : PyquestOperation(
+    "MixDephasing": PyquestOperation(
         lambda op, qureg: pqc.errors.mixDephasing()(
-            qureg=qureg,
-            qubit=op.wires[0],
-            probability=op.parameters[0],
+            qureg=qureg, qubit=op.wires[0], probability=op.parameters[0],
         )
     ),
-    "MixDepolarizing" : PyquestOperation(
+    "MixDepolarizing": PyquestOperation(
         lambda op, qureg: pqc.errors.mixDepolarizing()(
-            qureg=qureg,
-            qubit=op.wires[0],
-            probability=op.parameters[0],
+            qureg=qureg, qubit=op.wires[0], probability=op.parameters[0],
         )
     ),
-    "MixDamping" : PyquestOperation(
+    "MixDamping": PyquestOperation(
         lambda op, qureg: pqc.errors.mixDamping()(
-            qureg=qureg,
-            qubit=op.wires[0],
-            probability=op.parameters[0],
+            qureg=qureg, qubit=op.wires[0], probability=op.parameters[0],
         )
     ),
-    "MixKrausMap" : PyquestOperation(
+    "MixKrausMap": PyquestOperation(
         lambda op, qureg: pqc.errors.mixKrausMap()(
-            qureg=qureg,
-            qubit=op.wires[0],
-            operators=op.parameters[0],
+            qureg=qureg, qubit=op.wires[0], operators=op.parameters[0],
         )
     ),
 }
-
-_ALL = _OPERATIONS + _ERRORS

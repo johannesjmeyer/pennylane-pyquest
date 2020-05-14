@@ -55,152 +55,90 @@ Code details
 from pennylane.operation import Operation
 
 
-class S(Operation):
-    r"""S(wires)
-    S gate.
-
-    .. math:: S = \begin{bmatrix} 1 & 0 \\ 0 & i \end{bmatrix}
+class CompactUnitary(Operation):
+    r"""CompactUnitary(alpha, beta, wires)
+    CompactUnitary gate.
 
     **Details:**
 
     * Number of wires: 1
-    * Number of parameters: 0
+    * Number of parameters: 2 (complex)
 
     Args:
+        alpha (complex): alpha parameter
+        beta (complex): beta parameter
         wires (int): the subsystem the gate acts on
     """
-    num_params = 0
+    num_params = 2
     num_wires = 1
     par_domain = None
 
 
-class T(Operation):
-    r"""T(wires)
-    T gate.
-
-    .. math:: T = \begin{bmatrix}1&0\\0&e^{i \pi / 4}\end{bmatrix}
-
-    **Details:**
-
-    * Number of wires: 1
-    * Number of parameters: 0
-
-    Args:
-        wires (int): the subsystem the gate acts on
-    """
-    num_params = 0
-    num_wires = 1
-    par_domain = None
-
-
-class CCNOT(Operation):
-    r"""CCNOT(wires)
-    Controlled-controlled-not gate.
-
-    .. math::
-
-        CCNOT = \begin{bmatrix}
-            1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-            0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
-            0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
-            0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
-            0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
-            0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
-            0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
-            0 & 0 & 0 & 0 & 0 & 0 & 1 & 0
-        \end{bmatrix}
-
-    **Details:**
-
-    * Number of wires: 3
-    * Number of parameters: 0
-
-    Args:
-        wires (int): the subsystem the gate acts on
-    """
-    num_params = 0
-    num_wires = 3
-    par_domain = None
-
-
-class CPHASE(Operation):
-    r"""CHPASE(phi, q, wires)
-    Controlled-phase gate.
-
-    .. math::
-
-        CPHASE_{ij}(phi, q) = \begin{cases}
-            0, & i\neq j\\
-            1, & i=j, i\neq q\\
-            e^{i\phi}, & i=j=q
-        \end{cases}\in\mathbb{C}^{4\times 4}
+class ControlledCompactUnitary(Operation):
+    r"""ControlledCompactUnitary(alpha, beta, wires)
+    ControlledCompactUnitary gate.
 
     **Details:**
 
     * Number of wires: 2
-    * Number of parameters: 2
-    * Gradient recipe: :math:`\frac{d}{d\phi}CPHASE(\phi) = \frac{1}{2}\left[CPHASE(\phi+\pi/2)+CPHASE(\phi-\pi/2)\right]`
-      Note that the gradient recipe only applies to parameter :math:`\phi`.
-      Parameter :math:`q\in\mathbb{N}_0` and thus ``CPHASE`` can not be differentiated
-      with respect to :math:`q`.
+    * Number of parameters: 2 (complex)
 
     Args:
-        phi (float): the controlled phase angle
-        q (int): an integer between 0 and 3 that corresponds to a state
-            :math:`\{00, 01, 10, 11\}` on which the conditional phase
-            gets applied
+        alpha (complex): alpha parameter
+        beta (complex): beta parameter
         wires (int): the subsystem the gate acts on
     """
     num_params = 2
     num_wires = 2
-    par_domain = "R"
-    grad_method = "A"
-
-
-class CSWAP(Operation):
-    r"""CSWAP(wires)
-    Controlled-swap gate.
-
-    .. math::
-
-        CSWAP = \begin{bmatrix}
-            1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-             0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
-             0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
-             0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
-             0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
-             0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
-             0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
-             0 & 0 & 0 & 0 & 0 & 0 & 0 & 1
-        \end{bmatrix}
-
-    **Details:**
-
-    * Number of wires: 3
-    * Number of parameters: 0
-
-    Args:
-        wires (int): the subsystem the gate acts on
-    """
-    num_params = 0
-    num_wires = 3
     par_domain = None
 
 
-class ISWAP(Operation):
-    r"""ISWAP(wires)
-    iSWAP gate.
-
-    .. math:: ISWAP = \begin{bmatrix}
-            1 & 0 & 0 & 0 \\
-            0 & 0 & i & 0\\
-            0 & i & 0 & 0\\
-            0 & 0 & 0 & 1
-        \end{bmatrix}.
+class RotateAroundAxis(Operation):
+    r"""RotateAroundAxis(theta, vector, wires)
+    RotateAroundAxis gate.
 
     **Details:**
 
-    * Number of wires: 3
+    * Number of wires: 1
+    * Number of parameters: 2
+
+    Args:
+        theta (float): rotation angle
+        vector (array[float]): rotation axis
+        wires (int): the subsystem the gate acts on
+    """
+    num_params = 2
+    num_wires = 1
+    par_domain = None
+
+
+class RotateAroundSphericalAxis(Operation):
+    r"""RotateAroundSphericalAxis(theta, spherical_theta, spherical_phi, wires)
+    RotateAroundSphericalAxis gate.
+
+    **Details:**
+
+    * Number of wires: 1
+    * Number of parameters: 3
+
+    Args:
+        theta (float): rotation angle
+        spherical_theta (float): rotation axis theta
+        spherical_phi (float): rotation axis phi
+        wires (int): the subsystem the gate acts on
+    """
+    num_params = 3
+    num_wires = 1
+    par_domain = None
+
+
+class CY(Operation):
+    r"""CY(wires)
+    CY gate.
+
+    **Details:**
+
+    * Number of wires: 2
     * Number of parameters: 0
 
     Args:
@@ -211,29 +149,179 @@ class ISWAP(Operation):
     par_domain = None
 
 
-class PSWAP(Operation):
-    r"""PSWAP(wires)
-    Phase-SWAP gate.
-
-    .. math:: PSWAP(\phi) = \begin{bmatrix}
-            1 & 0 & 0 & 0 \\
-            0 & 0 & e^{i\phi} & 0\\
-            0 & e^{i\phi} & 0 & 0\\
-            0 & 0 & 0 & 1
-        \end{bmatrix}.
+class SqrtSWAP(Operation):
+    r"""SqrtSWAP(wires)
+    SqrtSWAP gate.
 
     **Details:**
 
-    * Number of wires: 3
-    * Number of parameters: 1
-    * Gradient recipe: :math:`\frac{d}{d\phi}PSWAP(\phi) = \frac{1}{2}\left[PSWAP(\phi+\pi/2)+PSWAP(\phi-\pi/2)\right]`
-
+    * Number of wires: 2
+    * Number of parameters: 0
 
     Args:
         wires (int): the subsystem the gate acts on
-        phi (float): the phase angle
+    """
+    num_params = 0
+    num_wires = 2
+    par_domain = None
+
+
+class SqrtISWAP(Operation):
+    r"""SqrtISWAP(wires)
+    SqrtISWAP gate.
+
+    **Details:**
+
+    * Number of wires: 2
+    * Number of parameters: 0
+
+    Args:
+        wires (int): the subsystem the gate acts on
+    """
+    num_params = 0
+    num_wires = 2
+    par_domain = None
+
+
+class InvSqrtISWAP(Operation):
+    r"""InvSqrtISWAP(wires)
+    InvSqrtISWAP gate.
+
+    **Details:**
+
+    * Number of wires: 2
+    * Number of parameters: 0
+
+    Args:
+        wires (int): the subsystem the gate acts on
+    """
+    num_params = 0
+    num_wires = 2
+    par_domain = None
+
+
+class ControlledPhaseShift(Operation):
+    r"""ControlledPhaseShift(theta, wires)
+    ControlledPhaseShift gate.
+
+    **Details:**
+
+    * Number of wires: 2
+    * Number of parameters: 1
+
+    Args:
+        theta (float): rotation angle
+        wires (int): the subsystem the gate acts on
     """
     num_params = 1
     num_wires = 2
-    par_domain = "R"
-    grad_method = "A"
+    par_domain = None
+
+
+class ControlledRotateAroundAxis(Operation):
+    r"""ControlledRotateAroundAxis(theta, vector, wires)
+    ControlledRotateAroundAxis gate.
+
+    **Details:**
+
+    * Number of wires: 2
+    * Number of parameters: 1
+
+    Args:
+        theta (float): rotation angle
+        vector (array[float]): rotation axis
+        wires (int): the subsystem the gate acts on
+    """
+    num_params = 2
+    num_wires = 2
+    par_domain = None
+
+
+class ControlledUnitary(Operation):
+    r"""ControlledUnitary(matrix, wires)
+    ControlledUnitary gate.
+
+    **Details:**
+
+    * Number of wires: 2
+    * Number of parameters: 1
+
+    Args:
+        matrix (array[complex]): the controlled unitary
+        wires (int): the subsystem the gate acts on
+    """
+    num_params = 1
+    num_wires = 2
+    par_domain = None
+
+
+class MixDephasing(Operation):
+    r"""MixDephasing(probability, wires)
+    MixDephasing channel.
+
+    **Details:**
+
+    * Number of wires: 1
+    * Number of parameters: 1
+
+    Args:
+        probability (float): dephasing probability
+        wires (int): the subsystem the gate acts on
+    """
+    num_params = 1
+    num_wires = 1
+    par_domain = None
+
+
+class MixDepolarizing(Operation):
+    r"""MixDepolarizing(probability, wires)
+    MixDepolarizing channel.
+
+    **Details:**
+
+    * Number of wires: 1
+    * Number of parameters: 1
+
+    Args:
+        probability (float): depolarization probability
+        wires (int): the subsystem the gate acts on
+    """
+    num_params = 1
+    num_wires = 1
+    par_domain = None
+
+
+class MixDamping(Operation):
+    r"""MixDamping(probability, wires)
+    MixDamping channel.
+
+    **Details:**
+
+    * Number of wires: 1
+    * Number of parameters: 1
+
+    Args:
+        probability (float): damping probability
+        wires (int): the subsystem the gate acts on
+    """
+    num_params = 1
+    num_wires = 1
+    par_domain = None
+
+
+class MixKrausMap(Operation):
+    r"""MixKrausMap(kraus_operators, wires)
+    MixKrausMap channel.
+
+    **Details:**
+
+    * Number of wires: 1
+    * Number of parameters: 1
+
+    Args:
+        kraus_operators (list[array[complex]]): Kraus operators
+        wires (int): the subsystem the gate acts on
+    """
+    num_params = 1
+    num_wires = 1
+    par_domain = None

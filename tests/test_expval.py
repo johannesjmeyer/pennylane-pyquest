@@ -119,9 +119,7 @@ class TestExpval:
         dev.pre_measure()
 
         res = np.array([dev.expval(name, [0], []), dev.expval(name, [1], [])])
-        assert np.allclose(
-            res, np.array([0, -np.cos(theta) * np.sin(phi)]), **tol
-        )
+        assert np.allclose(res, np.array([0, -np.cos(theta) * np.sin(phi)]), **tol)
 
     def test_hadamard_expectation(self, device, shots, tol):
         """Test that Hadamard expectation value is correct"""
@@ -176,16 +174,10 @@ class TestExpval:
         re_b = A[0, 1].real
         d = A[1, 1]
         ev1 = (
-            (a - d) * np.cos(theta)
-            + 2 * re_b * np.sin(theta) * np.sin(phi)
-            + a
-            + d
+            (a - d) * np.cos(theta) + 2 * re_b * np.sin(theta) * np.sin(phi) + a + d
         ) / 2
         ev2 = (
-            (a - d) * np.cos(theta) * np.cos(phi)
-            + 2 * re_b * np.sin(phi)
-            + a
-            + d
+            (a - d) * np.cos(theta) * np.cos(phi) + 2 * re_b * np.sin(phi) + a + d
         ) / 2
         expected = np.array([ev1, ev2])
 
@@ -319,9 +311,7 @@ class TestTensorExpval:
         res = dev.expval(["PauliZ", "Hermitian"], [[0], [1, 2]], [[], [A]])
         expected = 0.5 * (
             -6 * np.cos(theta) * (np.cos(varphi) + 1)
-            - 2
-            * np.sin(varphi)
-            * (np.cos(theta) + np.sin(phi) - 2 * np.cos(phi))
+            - 2 * np.sin(varphi) * (np.cos(theta) + np.sin(phi) - 2 * np.cos(phi))
             + 3 * np.cos(varphi) * np.sin(phi)
             + np.sin(phi)
         )

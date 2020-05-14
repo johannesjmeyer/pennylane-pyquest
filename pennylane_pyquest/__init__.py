@@ -15,7 +15,7 @@
 Plugin overview
 ===============
 """
-from .pure import PyquestPure
-from .mixed import PyquestMixed
-from .ops import S, T, CCNOT, CPHASE, CSWAP, ISWAP, PSWAP
+from .pyquest_pure import PyquestPure
+from .pyquest_mixed import PyquestMixed
 from ._version import __version__
+from .ops import *
