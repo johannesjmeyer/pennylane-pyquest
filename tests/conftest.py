@@ -14,7 +14,7 @@
 import numpy as np
 import pytest
 
-from plugin_name import Device1, Device2
+from pennylane_pyquest import PyquestPure, PyquestMixed
 
 
 np.random.seed(42)
@@ -43,12 +43,12 @@ A = np.array([[1.02789352, 1.61296440 - 0.3498192j],
 
 # List of all devices that support analytic expectation value
 # computation. This generally includes statevector/wavefunction simulators.
-analytic_devices = [Device1]
+analytic_devices = [PyquestPure]
 
 # List of all devices that do *not* support analytic expectation
 # value computation. This generally includes hardware devices
 # and hardware simulators.
-hw_devices = [Device2]
+hw_devices = [PyquestMixed]
 
 # List of all device shortnames
 shortnames = [d.short_name for d in analytic_devices + hw_devices]

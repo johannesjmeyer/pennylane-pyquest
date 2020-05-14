@@ -1,4 +1,4 @@
-.. automodule:: plugin_name.framework_device
+.. automodule:: pennylane_pyquest.framework_device
    :members:
    :private-members:
    :special-members:

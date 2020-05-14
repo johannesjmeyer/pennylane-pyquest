@@ -5,9 +5,9 @@ Plugin usage
 
 PennyLane-Plugin provides two Target Framework devices for PennyLane:
 
-* :class:`name.device1 <~Device1>`: provides an PennyLane device for the Target Framework Device1
+* :class:`name.pure <~PyquestPure>`: provides an PennyLane device for the Target Framework PyquestPure
 
-* :class:`name.device2 <~Device2>`: provides an PennyLane device for the Target Framework Device2
+* :class:`name.mixed <~PyquestMixed>`: provides an PennyLane device for the Target Framework PyquestMixed
 
 
 Using the devices
@@ -20,8 +20,8 @@ You can instantiate these devices in PennyLane as follows:
 
 >>> import pennylane as qml
 >>> from pennylane import numpy as np
->>> dev1 = qml.device('name.device1', wires=2, specific_option_for_device1=10)
->>> dev2 = qml.device('name.device2', wires=2)
+>>> dev1 = qml.device('name.pure', wires=2, specific_option_for_pure=10)
+>>> dev2 = qml.device('name.mixed', wires=2)
 
 These devices can then be used just like other devices for the definition and evaluation of QNodes within PennyLane.
 
@@ -44,15 +44,15 @@ Supported operations
 
 All devices support all PennyLane `operations and observables <https://pennylane.readthedocs.io/en/latest/code/ops/qubit.html>`_, with the exception of the PennyLane ``QubitStateVector`` state preparation operation.
 
-In addition, the plugin provides the following framework-specific operations for PennyLane. These are all importable from :mod:`plugin_name.ops <.ops>`.
+In addition, the plugin provides the following framework-specific operations for PennyLane. These are all importable from :mod:`pennylane_pyquest.ops <.ops>`.
 
 These operations include:
 
 .. autosummary::
-    plugin_name.ops.S
-    plugin_name.ops.T
-    plugin_name.ops.CCNOT
-    plugin_name.ops.CPHASE
-    plugin_name.ops.CSWAP
-    plugin_name.ops.ISWAP
-    plugin_name.ops.PSWAP
+    pennylane_pyquest.ops.S
+    pennylane_pyquest.ops.T
+    pennylane_pyquest.ops.CCNOT
+    pennylane_pyquest.ops.CPHASE
+    pennylane_pyquest.ops.CSWAP
+    pennylane_pyquest.ops.ISWAP
+    pennylane_pyquest.ops.PSWAP

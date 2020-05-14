@@ -37,7 +37,7 @@ class TestDeviceIntegration:
 
         # a hardware device will not allow shots=0
         with pytest.raises(ValueError, match="must be a positive integer"):
-            qml.device("pluginname.device2", wires=1, shots=0)
+            qml.device("pluginname.mixed", wires=1, shots=0)
 
         # a state simulator will allow shots=0
         qml.device("pyquest.simulator", wires=1, shots=0)

@@ -17,7 +17,7 @@ import sys
 import os
 from setuptools import setup
 
-with open("plugin_name/_version.py") as f:
+with open("pennylane_pyquest/_version.py") as f:
     version = f.readlines()[-1].split()[-1].strip("\"'")
 
 # Put pip installation requirements here.
@@ -38,7 +38,7 @@ info = {
         # The name of the folder containing the plugin.
         # This is the name that will be used when importing
         # the plugin in Python.
-        "plugin_name"
+        "pennylane_pyquest"
     ],
     "entry_points": {
         "pennylane.plugins": [
@@ -47,14 +47,14 @@ info = {
             # it corresponds to in the plugin. This allows
             # the device to be imported automatically via the
             # `pennylane.device` device loader.
-            "pluginname.devicename = plugin_name:DeviceClass"
+            "pluginname.devicename = pennylane_pyquest:DeviceClass"
         ]
     },
     # Place a one line description here. This will be shown by pip
     "description": "Plugin description",
     "long_description": open("README.rst").read(),
     # The name of the folder containing the plugin
-    "provides": ["plugin_name"],
+    "provides": ["pennylane_pyquest"],
     "install_requires": requirements,
 }
 

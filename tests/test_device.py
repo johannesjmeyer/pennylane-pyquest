@@ -16,8 +16,8 @@ import pytest
 
 import numpy as np
 
-from plugin_name.qiskit_device import z_eigs
-from plugin_name import Device1
+from pennylane_pyquest.qiskit_device import z_eigs
+from pennylane_pyquest import PyquestPure
 
 
 Z = np.diag([1, -1])
@@ -49,5 +49,5 @@ class TestProbabilities:
     def test_probability_no_results(self):
         """Test that the probabilities function returns
         None if no job has yet been run."""
-        dev = Device1(backend="statevector_simulator", wires=1, shots=0)
+        dev = PyquestPure(backend="statevector_simulator", wires=1, shots=0)
         assert dev.probabilities() is None

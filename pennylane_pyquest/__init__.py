@@ -15,7 +15,7 @@
 Plugin overview
 ===============
 """
-from .device1 import Device1
-from .device2 import Device2
+from .pure import PyquestPure
+from .mixed import PyquestMixed
 from .ops import S, T, CCNOT, CPHASE, CSWAP, ISWAP, PSWAP
 from ._version import __version__

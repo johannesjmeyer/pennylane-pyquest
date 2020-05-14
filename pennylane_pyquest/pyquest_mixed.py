@@ -15,14 +15,14 @@
 Device 1
 ========
 
-**Module name:** :mod:`plugin_name.Device2`
+**Module name:** :mod:`pennylane_pyquest.PyquestMixed`
 
-.. currentmodule:: plugin_name.Device2
+.. currentmodule:: pennylane_pyquest.PyquestMixed
 
 This Device implements all the :class:`~pennylane.device.Device` methods,
 for using Target Framework device/simulator as a PennyLane device.
 
-It can inherit from the abstract FrameworkDevice to reduce
+It can inherit from the abstract PyquestDevice to reduce
 code duplication if needed.
 
 
@@ -33,7 +33,7 @@ Classes
 -------
 
 .. autosummary::
-   Device2
+   PyquestMixed
 
 ----
 """
@@ -43,11 +43,11 @@ import numpy as np
 
 import TargetFramework as tf
 
-from .framework_device import FrameworkDevice
+from .framework_device import PyquestDevice
 
 
-class Device2(FrameworkDevice):
-    r"""Device2 for PennyLane.
+class PyquestMixed(PyquestDevice):
+    r"""PyquestMixed for PennyLane.
 
     Args:
         wires (int): the number of modes to initialize the device in
@@ -56,10 +56,10 @@ class Device2(FrameworkDevice):
             For simulator devices, 0 means the exact EV is returned.
         additional_option (float): as many additional arguments can be
             added as needed
-        specific_option_for_Device2 (int): another example
+        specific_option_for_PyquestMixed (int): another example
     """
-    name = "Target Framework Device2 for PennyLane"
-    short_name = "plugin_name.device2"
+    name = "Target Framework PyquestMixed for PennyLane"
+    short_name = "pennylane_pyquest.mixed"
 
     _operation_map = {
         "PauliX": tf.X,
@@ -74,9 +74,9 @@ class Device2(FrameworkDevice):
 
     _circuits = {}
 
-    def __init__(self, wires, *, additional_option, shots=0, specific_option_for_Device2=2):
+    def __init__(self, wires, *, additional_option, shots=0, specific_option_for_PyquestMixed=2):
         super().__init__(wires, shots=shots, additional_option=additional_option)
-        self.specific_option_for_Device2 = specific_option_for_Device2
+        self.specific_option_for_PyquestMixed = specific_option_for_PyquestMixed
 
     def apply(self, operation, wires, par):
         pass

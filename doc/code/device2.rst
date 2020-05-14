@@ -1,4 +1,4 @@
-.. automodule:: plugin_name.Device2
+.. automodule:: pennylane_pyquest.PyquestMixed
    :members:
    :private-members:
    :inherited-members:

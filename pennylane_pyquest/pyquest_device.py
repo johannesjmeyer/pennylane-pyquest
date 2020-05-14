@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Base Framework device class
+Pyquest device class
 ===========================
 
-**Module name:** :mod:`plugin_name.device`
+**Module name:** :mod:`pennylane_pyquest.device`
 
-.. currentmodule:: plugin_name.device
+.. currentmodule:: pennylane_pyquest.device
 
 An abstract base class for constructing Target Framework devices for PennyLane.
 
@@ -36,7 +36,7 @@ Classes
 -------
 
 .. autosummary::
-   FrameworkDevice
+   PyquestDevice
 
 Code details
 ~~~~~~~~~~~~
@@ -52,7 +52,7 @@ from pennylane import Device
 from ._version import __version__
 
 
-class FrameworkDevice(Device):
+class PyquestDevice(Device):
     r"""Abstract Framework device for PennyLane.
 
     Args:

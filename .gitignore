@@ -3,7 +3,7 @@
 doc/_build
 build
 dist
-plugin_name.egg-info
+pennylane_pyquest.egg-info
 .idea
 *.ipynb
 *.ipynb_checkpoints

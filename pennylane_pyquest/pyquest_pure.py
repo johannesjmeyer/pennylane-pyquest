@@ -12,17 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Device 1
+PyQuest Pure state 
 ========
 
-**Module name:** :mod:`plugin_name.device1`
+**Module name:** :mod:`pennylane_pyquest.pure`
 
-.. currentmodule:: plugin_name.device1
+.. currentmodule:: pennylane_pyquest.pure
 
 This Device implements all the :class:`~pennylane.device.Device` methods,
 for using Target Framework device/simulator as a PennyLane device.
 
-It can inherit from the abstract FrameworkDevice to reduce
+It can inherit from the abstract PyquestDevice to reduce
 code duplication if needed.
 
 
@@ -33,7 +33,7 @@ Classes
 -------
 
 .. autosummary::
-   Device1
+   PyquestPure
 
 ----
 """
@@ -43,11 +43,11 @@ import numpy as np
 
 import TargetFramework as tf
 
-from .framework_device import FrameworkDevice
+from .framework_device import PyquestDevice
 
 
-class Device1(FrameworkDevice):
-    r"""Device1 for PennyLane.
+class PyquestPure(PyquestDevice):
+    r"""PyquestPure for PennyLane.
 
     Args:
         wires (int): the number of modes to initialize the device in
@@ -56,10 +56,10 @@ class Device1(FrameworkDevice):
             For simulator devices, 0 means the exact EV is returned.
         additional_option (float): as many additional arguments can be
             added as needed
-        specific_option_for_device1 (int): another example
+        specific_option_for_pure (int): another example
     """
-    name = "Target Framework Device1 for PennyLane"
-    short_name = "plugin_name.device1"
+    name = "Target Framework PyquestPure for PennyLane"
+    short_name = "pennylane_pyquest.pure"
 
     _operation_map = {
         "PauliX": tf.X,
@@ -74,9 +74,9 @@ class Device1(FrameworkDevice):
 
     _circuits = {}
 
-    def __init__(self, wires, *, additional_option, shots=0, specific_option_for_device1=2):
+    def __init__(self, wires, *, additional_option, shots=0, specific_option_for_pure=2):
         super().__init__(wires, shots=shots, additional_option=additional_option)
-        self.specific_option_for_device1 = specific_option_for_device1
+        self.specific_option_for_pure = specific_option_for_pure
 
     def apply(self, operation, wires, par):
         pass

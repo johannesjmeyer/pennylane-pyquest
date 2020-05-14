@@ -77,5 +77,5 @@ Contents
 
    code/ops
    code/framework_device
-   code/device1
-   code/device2
+   code/pure
+   code/mixed
