@@ -85,6 +85,12 @@ class PyquestPure(PyquestDevice):
         "CRZ",
     }
 
+    def reset(self):
+        super().reset()
+
+        self._state = None
+        self._probs = None
+
     def _qureg_context(self):
         return QuregContext(self.num_wires)
 

@@ -85,7 +85,13 @@ class PyquestMixed(PyquestDevice):
         "MixDepolarising",
         "MixDamping",
         "MixKrausMap",
-    }
+    }    
+
+    def reset(self):
+        super().reset()
+
+        self._density_matrix = None
+        self._probs = None
 
     def _qureg_context(self):
         return DensityQuregContext(self.num_wires)
@@ -96,7 +102,7 @@ class PyquestMixed(PyquestDevice):
 
     @property
     def state(self):
-        return None
+        return self._density_matrix
 
     @property
     def density_matrix(self):
