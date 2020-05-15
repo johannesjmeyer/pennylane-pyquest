@@ -45,7 +45,7 @@ A = np.array(
 
 # List of all devices that support analytic expectation value
 # computation. This generally includes statevector/wavefunction simulators.
-analytic_devices = [PyquestPure]#, PyquestMixed]
+analytic_devices = [PyquestPure]  # , PyquestMixed]
 
 # List of all devices that do *not* support analytic expectation
 # value computation. This generally includes hardware devices

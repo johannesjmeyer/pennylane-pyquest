@@ -96,7 +96,7 @@ class PyquestPure(PyquestDevice):
 
     def _extract_information(self, context):
         self._state = reorder_state(pqc.cheat.getStateVector()(context.qureg))
-        self._probs = np.abs(self._state)**2
+        self._probs = np.abs(self._state) ** 2
 
     @property
     def state(self):

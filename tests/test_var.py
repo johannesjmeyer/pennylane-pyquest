@@ -36,8 +36,7 @@ class TestVar:
         theta = 0.6543
 
         # test correct variance for <Z> of a rotated state
-        dev.apply("RX", wires=[0], par=[phi])
-        dev.apply("RY", wires=[0], par=[theta])
+        dev.apply([qml.RX(phi, wires=[0]), qml.RY(theta, wires=[0])])
 
         dev._obs_queue = [qml.PauliZ(wires=[0], do_queue=False)]
         dev.pre_measure()
@@ -59,8 +58,7 @@ class TestVar:
 
         # test correct variance for <H> of a rotated state
         H = np.array([[4, -1 + 6j], [-1 - 6j, 2]])
-        dev.apply("RX", wires=[0], par=[phi])
-        dev.apply("RY", wires=[0], par=[theta])
+        dev.apply([qml.RX(phi, wires=[0]), qml.RY(theta, wires=[0])])
 
         dev._obs_queue = [qml.Hermitian(H, wires=[0], do_queue=False)]
         dev.pre_measure()
@@ -87,11 +85,15 @@ class TestTensorVar:
         varphi = -0.543
 
         dev = device(3)
-        dev.apply("RX", wires=[0], par=[theta])
-        dev.apply("RX", wires=[1], par=[phi])
-        dev.apply("RX", wires=[2], par=[varphi])
-        dev.apply("CNOT", wires=[0, 1], par=[])
-        dev.apply("CNOT", wires=[1, 2], par=[])
+        dev.apply(
+            [
+                qml.RX(theta, wires=[0]),
+                qml.RX(phi, wires=[1]),
+                qml.RX(varphi, wires=[2]),
+                qml.CNOT(wires=[0, 1]),
+                qml.CNOT(wires=[1, 2]),
+            ]
+        )
 
         dev._obs_queue = [
             qml.PauliX(wires=[0], do_queue=False)
@@ -119,11 +121,15 @@ class TestTensorVar:
         varphi = -0.543
 
         dev = device(3)
-        dev.apply("RX", wires=[0], par=[theta])
-        dev.apply("RX", wires=[1], par=[phi])
-        dev.apply("RX", wires=[2], par=[varphi])
-        dev.apply("CNOT", wires=[0, 1], par=[])
-        dev.apply("CNOT", wires=[1, 2], par=[])
+        dev.apply(
+            [
+                qml.RX(theta, wires=[0]),
+                qml.RX(phi, wires=[1]),
+                qml.RX(varphi, wires=[2]),
+                qml.CNOT(wires=[0, 1]),
+                qml.CNOT(wires=[1, 2]),
+            ]
+        )
 
         dev._obs_queue = [
             qml.PauliZ(wires=[0], do_queue=False)
@@ -150,11 +156,15 @@ class TestTensorVar:
         varphi = -0.543
 
         dev = device(3)
-        dev.apply("RX", wires=[0], par=[theta])
-        dev.apply("RX", wires=[1], par=[phi])
-        dev.apply("RX", wires=[2], par=[varphi])
-        dev.apply("CNOT", wires=[0, 1], par=[])
-        dev.apply("CNOT", wires=[1, 2], par=[])
+        dev.apply(
+            [
+                qml.RX(theta, wires=[0]),
+                qml.RX(phi, wires=[1]),
+                qml.RX(varphi, wires=[2]),
+                qml.CNOT(wires=[0, 1]),
+                qml.CNOT(wires=[1, 2]),
+            ]
+        )
 
         A = np.array(
             [

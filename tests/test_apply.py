@@ -192,7 +192,9 @@ class TestStateApply:
         dev = device(2)
         state = init_state(2)
 
-        dev.apply([qml.QubitStateVector(state, wires=[0, 1]), name(theta, wires=[0, 1])])
+        dev.apply(
+            [qml.QubitStateVector(state, wires=[0, 1]), name(theta, wires=[0, 1])]
+        )
         dev._obs_queue = []
         dev.pre_measure()
 

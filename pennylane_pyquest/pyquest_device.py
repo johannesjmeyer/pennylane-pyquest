@@ -80,12 +80,12 @@ class PyquestDevice(QubitDevice):
                 if operation.name == "QubitStateVector":
                     state = reorder_state(operation.parameters[0])
                     pqc.cheat.initStateFromAmps()(
-                        context.qureg,
-                        reals=np.real(state),
-                        imags=np.imag(state),
+                        context.qureg, reals=np.real(state), imags=np.imag(state),
                     )
                 elif operation.name == "BasisState":
-                    state_int = int("".join(str(x) for x in reversed(operation.parameters[0])), 2)
+                    state_int = int(
+                        "".join(str(x) for x in reversed(operation.parameters[0])), 2
+                    )
                     pqc.cheat.initClassicalState()(context.qureg, state=state_int)
                 else:
                     _OPERATIONS[operation.name].apply(operation, context.qureg)

@@ -85,7 +85,7 @@ class PyquestMixed(PyquestDevice):
         "MixDepolarising",
         "MixDamping",
         "MixKrausMap",
-    }    
+    }
 
     def reset(self):
         super().reset()

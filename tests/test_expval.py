@@ -33,9 +33,9 @@ class TestExpval:
         phi = 0.123
 
         dev = device(2)
-        dev.apply("RX", wires=[0], par=[theta])
-        dev.apply("RX", wires=[1], par=[phi])
-        dev.apply("CNOT", wires=[0, 1], par=[])
+        dev.apply(
+            [qml.RX(theta, wires=[0]), qml.RX(phi, wires=[1]), qml.CNOT(wires=[0, 1])]
+        )
 
         O = qml.Identity
         name = "Identity"
@@ -56,9 +56,9 @@ class TestExpval:
         phi = 0.123
 
         dev = device(2)
-        dev.apply("RX", wires=[0], par=[theta])
-        dev.apply("RX", wires=[1], par=[phi])
-        dev.apply("CNOT", wires=[0, 1], par=[])
+        dev.apply(
+            [qml.RX(theta, wires=[0]), qml.RX(phi, wires=[1]), qml.CNOT(wires=[0, 1])]
+        )
 
         O = qml.PauliZ
         name = "PauliZ"
@@ -81,9 +81,9 @@ class TestExpval:
         phi = 0.123
 
         dev = device(2)
-        dev.apply("RY", wires=[0], par=[theta])
-        dev.apply("RY", wires=[1], par=[phi])
-        dev.apply("CNOT", wires=[0, 1], par=[])
+        dev.apply(
+            [qml.RY(theta, wires=[0]), qml.RY(phi, wires=[1]), qml.CNOT(wires=[0, 1])]
+        )
 
         O = qml.PauliX
         name = "PauliX"
@@ -105,9 +105,9 @@ class TestExpval:
         phi = 0.123
 
         dev = device(2)
-        dev.apply("RX", wires=[0], par=[theta])
-        dev.apply("RX", wires=[1], par=[phi])
-        dev.apply("CNOT", wires=[0, 1], par=[])
+        dev.apply(
+            [qml.RX(theta, wires=[0]), qml.RX(phi, wires=[1]), qml.CNOT(wires=[0, 1])]
+        )
 
         O = qml.PauliY
         name = "PauliY"
@@ -127,9 +127,9 @@ class TestExpval:
         phi = 0.123
 
         dev = device(2)
-        dev.apply("RY", wires=[0], par=[theta])
-        dev.apply("RY", wires=[1], par=[phi])
-        dev.apply("CNOT", wires=[0, 1], par=[])
+        dev.apply(
+            [qml.RY(theta, wires=[0]), qml.RY(phi, wires=[1]), qml.CNOT(wires=[0, 1])]
+        )
 
         O = qml.Hadamard
         name = "Hadamard"
@@ -155,9 +155,9 @@ class TestExpval:
         phi = 0.123
 
         dev = device(2)
-        dev.apply("RY", wires=[0], par=[theta])
-        dev.apply("RY", wires=[1], par=[phi])
-        dev.apply("CNOT", wires=[0, 1], par=[])
+        dev.apply(
+            [qml.RY(theta, wires=[0]), qml.RY(phi, wires=[1]), qml.CNOT(wires=[0, 1])]
+        )
 
         O = qml.Hermitian
         name = "Hermitian"
@@ -189,9 +189,9 @@ class TestExpval:
         phi = 0.123
 
         dev = device(2)
-        dev.apply("RY", wires=[0], par=[theta])
-        dev.apply("RY", wires=[1], par=[phi])
-        dev.apply("CNOT", wires=[0, 1], par=[])
+        dev.apply(
+            [qml.RY(theta, wires=[0]), qml.RY(phi, wires=[1]), qml.CNOT(wires=[0, 1])]
+        )
 
         O = qml.Hermitian
         name = "Hermitian"
@@ -234,11 +234,15 @@ class TestTensorExpval:
         varphi = -0.543
 
         dev = device(3)
-        dev.apply("RX", wires=[0], par=[theta])
-        dev.apply("RX", wires=[1], par=[phi])
-        dev.apply("RX", wires=[2], par=[varphi])
-        dev.apply("CNOT", wires=[0, 1], par=[])
-        dev.apply("CNOT", wires=[1, 2], par=[])
+        dev.apply(
+            [
+                qml.RX(theta, wires=[0]),
+                qml.RX(phi, wires=[1]),
+                qml.RX(varphi, wires=[2]),
+                qml.CNOT(wires=[0, 1]),
+                qml.CNOT(wires=[1, 2]),
+            ]
+        )
 
         dev._obs_queue = [
             qml.PauliX(wires=[0], do_queue=False)
@@ -258,11 +262,15 @@ class TestTensorExpval:
         varphi = -0.543
 
         dev = device(3)
-        dev.apply("RX", wires=[0], par=[theta])
-        dev.apply("RX", wires=[1], par=[phi])
-        dev.apply("RX", wires=[2], par=[varphi])
-        dev.apply("CNOT", wires=[0, 1], par=[])
-        dev.apply("CNOT", wires=[1, 2], par=[])
+        dev.apply(
+            [
+                qml.RX(theta, wires=[0]),
+                qml.RX(phi, wires=[1]),
+                qml.RX(varphi, wires=[2]),
+                qml.CNOT(wires=[0, 1]),
+                qml.CNOT(wires=[1, 2]),
+            ]
+        )
 
         dev._obs_queue = [
             qml.PauliZ(wires=[0], do_queue=False)
@@ -287,11 +295,15 @@ class TestTensorExpval:
         varphi = -0.543
 
         dev = device(3)
-        dev.apply("RX", wires=[0], par=[theta])
-        dev.apply("RX", wires=[1], par=[phi])
-        dev.apply("RX", wires=[2], par=[varphi])
-        dev.apply("CNOT", wires=[0, 1], par=[])
-        dev.apply("CNOT", wires=[1, 2], par=[])
+        dev.apply(
+            [
+                qml.RX(theta, wires=[0]),
+                qml.RX(phi, wires=[1]),
+                qml.RX(varphi, wires=[2]),
+                qml.CNOT(wires=[0, 1]),
+                qml.CNOT(wires=[1, 2]),
+            ]
+        )
 
         A = np.array(
             [
