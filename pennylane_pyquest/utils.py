@@ -16,8 +16,5 @@ def reversed_indices(n):
 
 def reorder_state(state):
     N = len(state)
-
-    print("N = ", N)
-    print("REversed indices = ", reversed_indices(N-1))
     
     return state[reversed_indices(N-1)]

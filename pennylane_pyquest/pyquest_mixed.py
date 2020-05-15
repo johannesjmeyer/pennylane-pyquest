@@ -62,7 +62,7 @@ class PyquestMixed(PyquestDevice):
     operations = {
         "BasisState",
         "QubitStateVector",
-        "QubitUnitary",
+        # "QubitUnitary", # Theoretically supportable, but silently crashes due to C errors
         "PauliX",
         "PauliY",
         "PauliZ",
@@ -90,8 +90,9 @@ class PyquestMixed(PyquestDevice):
     def _qureg_context(self):
         return DensityQuregContext(self.num_wires)
 
-    def _get_state(self, context):
+    def _extract_information(self, context):
         self._density_matrix = pqc.cheat.getDensityMatrix()(context.qureg)
+        self._probs = np.diag(self._density_matrix)
 
     @property
     def state(self):

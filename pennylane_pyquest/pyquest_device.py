@@ -69,7 +69,7 @@ class PyquestDevice(QubitDevice):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _get_state(self):
+    def _extract_information(self):
         raise NotImplementedError
 
     def apply(self, operations, rotations=None, **kwargs):
@@ -90,4 +90,14 @@ class PyquestDevice(QubitDevice):
                 else:
                     _OPERATIONS[operation.name].apply(operation, context.qureg)
 
-            self._get_state(context)
+            self._extract_information(context)
+
+    def analytic_probability(self, wires=None):
+        """Return the (marginal) analytic probability of each computational basis state."""
+        if self._probs is None:
+            return None
+
+        wires = wires or range(self.num_wires)
+
+        prob = self.marginal_prob(self._probs, wires)
+        return prob

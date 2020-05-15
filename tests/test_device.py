@@ -19,14 +19,24 @@ import pennylane_pyquest
 from pennylane_pyquest import PyquestPure
 import pennylane as qml
 
+U = np.array(
+    [
+        [0.83645892 - 0.40533293j, -0.20215326 + 0.30850569j],
+        [-0.23889780 - 0.28101519j, -0.88031770 - 0.29832709j],
+    ], dtype=np.complex
+)
 
 class TestAbstract:
     def test_apply(self):
         dev = PyquestPure(wires=2)
 
+        print(U)
+        print(U @ U.conj().T)
+
         dev.apply(
             [ 
-                qml.BasisState(np.array([0, 1]), wires=[0, 1]),
+                qml.QubitUnitary(U, wires=[0]),
+                #qml.BasisState(np.array([0, 1]), wires=[0, 1]),
                 #qml.PauliX(0),
                 #qml.PauliX(1),
                 #qml.CNOT(wires=[0, 1])

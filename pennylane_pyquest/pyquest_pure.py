@@ -64,7 +64,7 @@ class PyquestPure(PyquestDevice):
     operations = {
         "BasisState",
         "QubitStateVector",
-        "QubitUnitary",
+        # "QubitUnitary", # Theoretically supportable, but silently crashes due to C errors
         "PauliX",
         "PauliY",
         "PauliZ",
@@ -88,8 +88,9 @@ class PyquestPure(PyquestDevice):
     def _qureg_context(self):
         return QuregContext(self.num_wires)
 
-    def _get_state(self, context):
+    def _extract_information(self, context):
         self._state = reorder_state(pqc.cheat.getStateVector()(context.qureg))
+        self._probs = np.abs(self._state)**2
 
     @property
     def state(self):
