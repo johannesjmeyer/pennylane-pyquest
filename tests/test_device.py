@@ -37,7 +37,7 @@ class TestAbstract:
 
         dev.apply(
             [
-                # qml.QubitUnitary(U, wires=[0]),
+                qml.QubitUnitary(U, wires=[0]),
                 # qml.BasisState(np.array([0, 1]), wires=[0, 1]),
                 # qml.PauliX(0),
                 # qml.PauliX(1),

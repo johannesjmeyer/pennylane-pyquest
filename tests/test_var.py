@@ -38,7 +38,7 @@ class TestVar:
         # test correct variance for <Z> of a rotated state
         dev.apply([qml.RX(phi, wires=[0]), qml.RY(theta, wires=[0])])
 
-        dev._obs_queue = [qml.PauliZ(wires=[0], do_queue=False)]
+        dev._obs_queue = [qml.PauliZ(wires=[0])]
         dev.pre_measure()
 
         var = dev.var("PauliZ", [0], [])
@@ -60,7 +60,7 @@ class TestVar:
         H = np.array([[4, -1 + 6j], [-1 - 6j, 2]])
         dev.apply([qml.RX(phi, wires=[0]), qml.RY(theta, wires=[0])])
 
-        dev._obs_queue = [qml.Hermitian(H, wires=[0], do_queue=False)]
+        dev._obs_queue = [qml.Hermitian(H, wires=[0])]
         dev.pre_measure()
 
         var = dev.var("Hermitian", [0], [H])
@@ -96,8 +96,8 @@ class TestTensorVar:
         )
 
         dev._obs_queue = [
-            qml.PauliX(wires=[0], do_queue=False)
-            @ qml.PauliY(wires=[2], do_queue=False)
+            qml.PauliX(wires=[0])
+            @ qml.PauliY(wires=[2])
         ]
         res = dev.pre_measure()
 
@@ -132,9 +132,9 @@ class TestTensorVar:
         )
 
         dev._obs_queue = [
-            qml.PauliZ(wires=[0], do_queue=False)
-            @ qml.Hadamard(wires=[1], do_queue=False)
-            @ qml.PauliY(wires=[2], do_queue=False)
+            qml.PauliZ(wires=[0])
+            @ qml.Hadamard(wires=[1])
+            @ qml.PauliY(wires=[2])
         ]
         res = dev.pre_measure()
 
@@ -176,8 +176,8 @@ class TestTensorVar:
         )
 
         dev._obs_queue = [
-            qml.PauliZ(wires=[0], do_queue=False)
-            @ qml.Hermitian(A, wires=[1, 2], do_queue=False)
+            qml.PauliZ(wires=[0])
+            @ qml.Hermitian(A, wires=[1, 2])
         ]
         res = dev.pre_measure()
 

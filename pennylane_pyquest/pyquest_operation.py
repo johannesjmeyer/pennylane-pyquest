@@ -13,6 +13,7 @@
 # limitations under the License.
 import pyquest_cffi as pqc
 import pennylane as qml
+from .utils import reorder_matrix
 
 _PAULI_TO_INT_DICT = {"I": 0, "X": 1, "Y": 2, "Z": 3}
 
@@ -99,10 +100,10 @@ _OPERATIONS = {
         )
     ),
     "QubitUnitary": PyquestOperation(
-        lambda op, qureg: pqc.ops.unitary()(
-            qureg=qureg, qubit=op.wires[0], matrix=op.parameters[0]
+        lambda op, qureg: pqc.ops.multiQubitUnitary()(
+            qureg=qureg, targets=op.wires, matrix=reorder_matrix(op.parameters[0])
         )
-    ),  # Only single qubit
+    ), 
     "ControlledCompactUnitary": PyquestOperation(
         lambda op, qureg: pqc.ops.controlledCompactUnitary()(
             qureg=qureg,

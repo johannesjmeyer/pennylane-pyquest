@@ -62,7 +62,7 @@ class PyquestMixed(PyquestDevice):
     operations = {
         "BasisState",
         "QubitStateVector",
-        # "QubitUnitary", # Theoretically supportable, but silently crashes due to C errors
+        "QubitUnitary", # Theoretically supportable, but silently crashes due to C errors
         "PauliX",
         "PauliY",
         "PauliZ",

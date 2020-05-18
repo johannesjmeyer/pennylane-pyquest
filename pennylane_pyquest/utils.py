@@ -1,4 +1,5 @@
 import numpy as np
+import math
 import functools
 
 
@@ -17,7 +18,26 @@ def reversed_indices(n):
     return np.array(indices)
 
 
-def reorder_state(state):
+def reorder_state2(state):
     N = len(state)
 
     return state[reversed_indices(N - 1)]
+
+def reorder_state(state):
+    N = int(math.log2(len(state)))
+
+    state = state.reshape([2] * N)
+    state = np.moveaxis(state, list(range(N)), list(reversed(range(N))))
+
+    return state.ravel()
+
+def reorder_matrix(matrix):
+    N = int(math.log2(matrix.shape[0]))
+
+    matrix = matrix.reshape([2] * (2 * N))
+    src = np.array(list(range(N)))
+    dest = np.array(list(reversed(range(N))))
+    matrix = np.moveaxis(matrix, src, dest)
+    matrix = np.moveaxis(matrix, src + N, dest + N)
+
+    return matrix.reshape((2**N, 2**N))

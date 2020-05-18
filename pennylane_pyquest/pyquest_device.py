@@ -76,7 +76,10 @@ class PyquestDevice(QubitDevice):
         with self._qureg_context() as context:
             pqc.cheat.initZeroState()(qureg=context.qureg)
 
-            for operation in operations:
+            all_operations = operations + rotations if rotations else operations
+
+            for operation in all_operations:
+                print("Applying operation ", operation, "params = ", operation.parameters)
                 if operation.name == "QubitStateVector":
                     state = reorder_state(operation.parameters[0])
                     pqc.cheat.initStateFromAmps()(

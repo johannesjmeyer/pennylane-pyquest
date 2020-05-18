@@ -35,7 +35,7 @@ class TestSample:
 
         dev.apply([qml.RX(1.5708, wires=[0])])
 
-        dev._obs_queue = [qml.PauliZ(wires=[0], do_queue=False)]
+        dev._obs_queue = [qml.PauliZ(wires=[0])]
 
         for idx in range(len(dev._obs_queue)):
             dev._obs_queue[idx].return_type = qml.operation.Sample
@@ -58,7 +58,7 @@ class TestSample:
 
         dev.apply([qml.RX(theta, wires=[0])])
 
-        dev._obs_queue = [qml.Hermitian(A, wires=[0], do_queue=False)]
+        dev._obs_queue = [qml.Hermitian(A, wires=[0])]
 
         for idx in range(len(dev._obs_queue)):
             dev._obs_queue[idx].return_type = qml.operation.Sample
@@ -106,7 +106,7 @@ class TestSample:
             ]
         )
 
-        dev._obs_queue = [qml.Hermitian(A, wires=[0, 1], do_queue=False)]
+        dev._obs_queue = [qml.Hermitian(A, wires=[0, 1])]
 
         for idx in range(len(dev._obs_queue)):
             dev._obs_queue[idx].return_type = qml.operation.Sample
@@ -155,8 +155,8 @@ class TestTensorSample:
         )
 
         dev._obs_queue = [
-            qml.PauliX(wires=[0], do_queue=False)
-            @ qml.PauliY(wires=[2], do_queue=False)
+            qml.PauliX(wires=[0])
+            @ qml.PauliY(wires=[2])
         ]
 
         for idx in range(len(dev._obs_queue)):
@@ -202,9 +202,9 @@ class TestTensorSample:
         )
 
         dev._obs_queue = [
-            qml.PauliZ(wires=[0], do_queue=False)
-            @ qml.Hadamard(wires=[1], do_queue=False)
-            @ qml.PauliY(wires=[2], do_queue=False)
+            qml.PauliZ(wires=[0])
+            @ qml.Hadamard(wires=[1])
+            @ qml.PauliY(wires=[2])
         ]
 
         for idx in range(len(dev._obs_queue)):
@@ -259,8 +259,8 @@ class TestTensorSample:
         )
 
         dev._obs_queue = [
-            qml.PauliZ(wires=[0], do_queue=False)
-            @ qml.Hermitian(A, wires=[1, 2], do_queue=False)
+            qml.PauliZ(wires=[0])
+            @ qml.Hermitian(A, wires=[1, 2])
         ]
 
         for idx in range(len(dev._obs_queue)):
