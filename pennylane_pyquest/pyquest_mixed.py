@@ -104,7 +104,7 @@ class PyquestMixed(PyquestDevice):
 
     def _extract_information(self, context):
         self._density_matrix = reorder_matrix(pqc.cheat.getDensityMatrix()(context.qureg))
-        self._probs = np.diag(self._density_matrix)
+        self._probs = np.real(np.diag(self._density_matrix))
 
     @property
     def state(self):
