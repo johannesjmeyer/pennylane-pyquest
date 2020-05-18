@@ -76,12 +76,17 @@ class PyquestDevice(QubitDevice):
     @abc.abstractmethod
     def _init_state_vector(self):
         raise NotImplementedError
+        
+    def _preprocess_operations(self, operations):
+        return operations
 
     def apply(self, operations, rotations=None, **kwargs):
         with self._qureg_context() as context:
             pqc.cheat.initZeroState()(qureg=context.qureg)
 
             all_operations = operations + rotations if rotations else operations
+
+            all_operations = self._preprocess_operations(all_operations)
 
             for operation in all_operations:
                 if operation.name == "QubitStateVector":

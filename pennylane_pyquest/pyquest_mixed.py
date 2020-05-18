@@ -90,6 +90,16 @@ class PyquestMixed(PyquestDevice):
         "MixKrausMap",
     }
 
+    def __init__(self, wires, *, shots=1000, analytic=True, error_model=None):
+        """
+        Args:
+            error_model(operation->list[operation]): A function that is called for every operation in the 
+                queue and returns a list of operations that represent additional errors.
+        """
+        super().__init__(wires, shots=shots, analytic=analytic)
+
+        self.error_model = error_model
+
     def reset(self):
         super().reset()
 
@@ -109,6 +119,17 @@ class PyquestMixed(PyquestDevice):
             imags=np.imag(matrix),
             numamps=len(matrix),
         )
+
+    def _preprocess_operations(self, operations):
+        if not self.error_model:
+            return operations
+
+        out = []
+        for op in operations:
+            out.append(op)
+            out = out + error_model(op)
+
+        return out
 
     def _extract_information(self, context):
         self._density_matrix = reorder_matrix(pqc.cheat.getDensityMatrix()(context.qureg))
