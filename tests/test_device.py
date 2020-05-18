@@ -32,9 +32,6 @@ class TestAbstract:
     def no_test_apply(self):
         dev = PyquestPure(wires=2)
 
-        print(U)
-        print(U @ U.conj().T)
-
         dev.apply(
             [
                 qml.QubitUnitary(U, wires=[0]),
@@ -44,7 +41,5 @@ class TestAbstract:
                 # qml.CNOT(wires=[0, 1])
             ]
         )
-
-        print(dev.state)
 
         # assert False

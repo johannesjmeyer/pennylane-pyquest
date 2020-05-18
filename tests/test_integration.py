@@ -116,7 +116,4 @@ class TestCompareDefaultQubit:
         cost = lambda params: autograd.numpy.sum(node(params)) - node(params)[0] ** 2
         comp_cost = lambda params: autograd.numpy.sum(comp_node(params)) - comp_node(params)[0] ** 2
 
-        print("cost(params) = ", cost(params))
-        print("comp_cost(params) = ", comp_cost(params))
-
         assert np.allclose(autograd.grad(cost)(params), autograd.grad(comp_cost)(params), **tol)

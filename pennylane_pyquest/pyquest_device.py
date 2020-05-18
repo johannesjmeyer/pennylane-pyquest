@@ -84,7 +84,6 @@ class PyquestDevice(QubitDevice):
             all_operations = operations + rotations if rotations else operations
 
             for operation in all_operations:
-                print("Applying operation ", operation, "params = ", operation.parameters)
                 if operation.name == "QubitStateVector":
                     self._init_state_vector(operation.parameters[0], context)
                 elif operation.name == "BasisState":
