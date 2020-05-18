@@ -127,7 +127,7 @@ class PyquestMixed(PyquestDevice):
         out = []
         for op in operations:
             out.append(op)
-            out = out + error_model(op)
+            out = out + self.error_model(op)
 
         return out
 

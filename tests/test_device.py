@@ -17,7 +17,7 @@ import pennylane as qml
 import pytest
 
 import pennylane_pyquest
-from pennylane_pyquest import PyquestPure
+from pennylane_pyquest import PyquestPure, PyquestMixed
 
 U = np.array(
     [
@@ -43,3 +43,60 @@ class TestAbstract:
         )
 
         # assert False
+
+def simple_error_model(operation):
+    if operation.num_wires == 1:
+        return [pennylane_pyquest.ops.MixDephasing(0.01, wires=operation.wires)]
+        
+    return [pennylane_pyquest.ops.MixDephasing(0.03, wires=w) for w in operation.wires]
+
+class TestErrorModel:
+
+    def test_error_model(self):
+        dev = PyquestMixed(wires=3, error_model=simple_error_model)
+
+        res = dev._preprocess_operations([
+            qml.Hadamard(0),
+            qml.CNOT(wires=[0, 1]),
+            qml.RZ(0.54, wires=[0]),
+            qml.CNOT(wires=[1, 2]),
+        ])
+
+        assert res[0].name == "Hadamard"
+        assert res[1].name == "MixDephasing"
+        assert res[2].name == "CNOT"
+        assert res[3].name == "MixDephasing"
+        assert res[4].name == "MixDephasing"
+        assert res[5].name == "Hadamard"
+        assert res[6].name == "MixDephasing"
+        assert res[7].name == "CNOT"
+        assert res[8].name == "MixDephasing"
+        assert res[9].name == "MixDephasing"
+
+        assert False
+
+    def test_error_model(self):
+        err_dev = PyquestMixed(wires=3, error_model=simple_error_model)
+        dev = PyquestMixed(wires=3)
+
+        def circuit():
+            qml.Hadamard(0)
+            qml.Hadamard(1)
+            qml.Hadamard(2)
+            qml.CNOT(wires=[0, 1])
+            qml.CNOT(wires=[1, 2])
+            qml.RY(0.54, wires=[0])
+            qml.RY(0.66, wires=[1])
+            qml.RY(0.98, wires=[2])
+            qml.CNOT(wires=[1, 2])
+            qml.CNOT(wires=[0, 1])
+
+            return qml.expval(qml.PauliZ(0))
+
+        node = qml.QNode(circuit, dev)
+        err_node = qml.QNode(circuit, err_dev)
+
+        print(node())
+        print(err_node())
+
+        assert node() != err_node()
