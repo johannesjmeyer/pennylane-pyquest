@@ -34,7 +34,8 @@ You can instantiate these devices for PennyLane as follows:
 .. code-block:: python
 
     import pennylane as qml
-    dev1 = qml.device('pyquest.simulator', wires=2)
+    dev1 = qml.device('pyquest.pure', wires=2)
+    dev2 = qml.device('pyquest.mixed', wires=2)
 
 These devices can then be used just like other devices for the definition and evaluation of
 QNodes within PennyLane. For more details, see the
@@ -60,13 +61,9 @@ Johannes Jakob Meyer.
 
 If you are doing research using PennyLane, please cite our papers:
 
-    Ville Bergholm, Josh Izaac, Maria Schuld, Christian Gogolin, and Nathan Killoran.
+    Bergholm et al.,
     *PennyLane: Automatic differentiation of hybrid quantum-classical computations.* 2018.
     `arXiv:1811.04968 <https://arxiv.org/abs/1811.04968>`_
-
-    Maria Schuld, Ville Bergholm, Christian Gogolin, Josh Izaac, and Nathan Killoran.
-    *Evaluating analytic gradients on quantum hardware.* 2018.
-    `Phys. Rev. A 99, 032331 <https://journals.aps.org/pra/abstract/10.1103/PhysRevA.99.032331>`_
 
 
 Support
