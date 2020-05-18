@@ -40,7 +40,7 @@ Classes
 import numpy as np
 from .pyquest_device import PyquestDevice
 import pyquest_cffi as pqc
-from .utils import reorder_matrix
+from .utils import reorder_matrix, reorder_state
 
 class DensityQuregContext:
     def __init__(self, wires):
@@ -58,11 +58,12 @@ class DensityQuregContext:
 
 
 class PyquestMixed(PyquestDevice):
+    _capabilities = {"mixed_state": True}
 
     operations = {
         "BasisState",
         "QubitStateVector",
-        "QubitUnitary", # Theoretically supportable, but silently crashes due to C errors
+        "QubitUnitary",
         "PauliX",
         "PauliY",
         "PauliZ",
@@ -95,6 +96,11 @@ class PyquestMixed(PyquestDevice):
 
     def _qureg_context(self):
         return DensityQuregContext(self.num_wires)
+
+    def _init_state_vector(self, state, context):
+        state = reorder_state(state)
+        matrix = np.outer(state.conj(), state).ravel()
+        pqc.cheat.setDensityAmps()(qureg=context.qureg, startind=0, reals=np.real(matrix), imags=np.imag(matrix), numamps=len(matrix))
 
     def _extract_information(self, context):
         self._density_matrix = reorder_matrix(pqc.cheat.getDensityMatrix()(context.qureg))

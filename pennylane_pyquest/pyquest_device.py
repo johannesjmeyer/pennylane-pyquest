@@ -72,6 +72,10 @@ class PyquestDevice(QubitDevice):
     def _extract_information(self):
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def _init_state_vector(self):
+        raise NotImplementedError
+
     def apply(self, operations, rotations=None, **kwargs):
         with self._qureg_context() as context:
             pqc.cheat.initZeroState()(qureg=context.qureg)
@@ -81,10 +85,7 @@ class PyquestDevice(QubitDevice):
             for operation in all_operations:
                 print("Applying operation ", operation, "params = ", operation.parameters)
                 if operation.name == "QubitStateVector":
-                    state = reorder_state(operation.parameters[0])
-                    pqc.cheat.initStateFromAmps()(
-                        context.qureg, reals=np.real(state), imags=np.imag(state),
-                    )
+                    self._init_state_vector(operation.parameters[0], context)
                 elif operation.name == "BasisState":
                     state_int = int(
                         "".join(str(x) for x in reversed(operation.parameters[0])), 2

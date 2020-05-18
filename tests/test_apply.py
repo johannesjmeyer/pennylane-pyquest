@@ -94,10 +94,11 @@ class TestStateApply:
         dev._obs_queue = []
         dev.pre_measure()
 
-        res = np.abs(dev.state) ** 2
-
         expected = np.zeros([2 ** 4])
         expected[np.ravel_multi_index(state, [2] * 4)] = 1
+        
+        res = dev.analytic_probability()
+            
         assert np.allclose(res, expected, **tol)
 
     def test_identity_basis_state(self, device, tol):
@@ -109,7 +110,7 @@ class TestStateApply:
         dev._obs_queue = []
         dev.pre_measure()
 
-        res = np.abs(dev.state) ** 2
+        res = dev.analytic_probability()
 
         expected = np.zeros([2 ** 4])
         expected[np.ravel_multi_index(state, [2] * 4)] = 1
@@ -124,7 +125,7 @@ class TestStateApply:
         dev._obs_queue = []
         dev.pre_measure()
 
-        res = np.abs(dev.state) ** 2
+        res = dev.analytic_probability()
         expected = np.abs(state) ** 2
         assert np.allclose(res, expected, **tol)
 
@@ -138,7 +139,7 @@ class TestStateApply:
         dev._obs_queue = []
         dev.pre_measure()
 
-        res = np.abs(dev.state) ** 2
+        res = dev.analytic_probability()
         expected = np.abs(mat @ state) ** 2
         assert np.allclose(res, expected, **tol)
 
@@ -152,8 +153,8 @@ class TestStateApply:
         dev.apply([qml.QubitStateVector(state, wires=[0]), name(theta, wires=[0])])
         dev._obs_queue = []
         dev.pre_measure()
-
-        res = np.abs(dev.state) ** 2
+        
+        res = dev.analytic_probability()
         expected = np.abs(func(theta) @ state) ** 2
         assert np.allclose(res, expected, **tol)
 
@@ -167,7 +168,7 @@ class TestStateApply:
         dev._obs_queue = []
         dev.pre_measure()
 
-        res = np.abs(dev.state) ** 2
+        res = dev.analytic_probability()
         expected = np.abs(mat @ state) ** 2
         assert np.allclose(res, expected, **tol)
 
@@ -181,7 +182,7 @@ class TestStateApply:
     #     dev._obs_queue = []
     #     dev.pre_measure()
 
-    #     res = np.abs(dev.state) ** 2
+    #     res = dev.analytic_probability()
     #     expected = np.abs(mat @ state) ** 2
     #     assert np.allclose(res, expected, **tol)
 
@@ -198,6 +199,6 @@ class TestStateApply:
         dev._obs_queue = []
         dev.pre_measure()
 
-        res = np.abs(dev.state) ** 2
+        res = dev.analytic_probability()
         expected = np.abs(func(theta) @ state) ** 2
         assert np.allclose(res, expected, **tol)

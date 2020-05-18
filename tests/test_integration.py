@@ -16,6 +16,7 @@ import numpy as np
 import pennylane as qml
 import pytest
 from pennylane_pyquest import PyquestPure, PyquestMixed
+import autograd
 
 from conftest import shortnames
 
@@ -51,3 +52,55 @@ class TestDeviceIntegration:
             return qml.expval(qml.PauliZ(0))
 
         assert np.allclose(circuit(a, b, c), np.cos(a) * np.sin(b), **tol)
+
+@pytest.mark.parametrize("shots", [8192])
+class TestCompareDefaultQubit:
+    """Integration tests against default.qubit"""
+
+    @pytest.mark.parametrize("params", np.random.uniform(0, 2*np.pi, (10, 3, 3, 3)))
+    def test_strongly_ent_layers(self, device, shots, tol, params):
+        dev = device(3)
+        comp_dev = qml.device("default.qubit", wires=3)
+
+        def circuit(params):
+            qml.templates.StronglyEntanglingLayers(params, wires=[0, 1, 2])
+
+            return qml.expval(qml.PauliX(0)), qml.var(qml.Hadamard(1)), qml.expval(qml.Hermitian(np.array([[1, 2], [2, -4]]), wires=[2]))
+
+        node = qml.QNode(circuit, dev)
+        comp_node = qml.QNode(circuit, comp_dev)
+
+        assert np.allclose(node(params), comp_node(params), **tol)
+
+    @pytest.mark.parametrize("params", np.random.uniform(0, 2*np.pi, (10, 14)))
+    def test_arbitrary_state_prep(self, device, shots, tol, params):
+        dev = device(3)
+        comp_dev = qml.device("default.qubit", wires=3)
+
+        def circuit(params):
+            qml.templates.ArbitraryStatePreparation(params, wires=[0, 1, 2])
+
+            return qml.expval(qml.PauliX(0)), qml.var(qml.Hadamard(1)), qml.expval(qml.Hermitian(np.array([[1, 2], [2, -4]]), wires=[2]))
+
+        node = qml.QNode(circuit, dev)
+        comp_node = qml.QNode(circuit, comp_dev)
+
+        assert np.allclose(node(params), comp_node(params), **tol)
+
+    @pytest.mark.parametrize("params", np.random.uniform(0, 2*np.pi, (3, 14)))
+    def test_diff(self, device, shots, tol, params):
+        dev = device(3)
+        comp_dev = qml.device("default.qubit", wires=3)
+
+        def circuit(params):
+            qml.templates.ArbitraryStatePreparation(params, wires=[0, 1, 2])
+
+            return qml.expval(qml.PauliX(0)), qml.var(qml.Hadamard(1)), qml.expval(qml.Hermitian(np.array([[1, 2], [2, -4]]), wires=[2]))
+
+        node = qml.QNode(circuit, dev)
+        comp_node = qml.QNode(circuit, comp_dev)
+
+        cost = lambda params: autograd.numpy.sum(node(params)) - node(params)[0]**2
+        comp_cost = lambda params: autograd.numpy.sum(comp_node(params)) - comp_node(params)[0]**2
+
+        assert np.allclose(autograd.grad(cost)(params), autograd.grad(comp_cost)(params), **tol)

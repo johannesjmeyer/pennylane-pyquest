@@ -94,6 +94,12 @@ class PyquestPure(PyquestDevice):
     def _qureg_context(self):
         return QuregContext(self.num_wires)
 
+    def _init_state_vector(self, state, context):
+        state = reorder_state(state)
+        pqc.cheat.initStateFromAmps()(
+            context.qureg, reals=np.real(state), imags=np.imag(state),
+        )
+
     def _extract_information(self, context):
         self._state = reorder_state(pqc.cheat.getStateVector()(context.qureg))
         self._probs = np.abs(self._state) ** 2
