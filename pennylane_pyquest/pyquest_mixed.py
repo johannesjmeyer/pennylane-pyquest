@@ -38,9 +38,11 @@ Classes
 ----
 """
 import numpy as np
-from .pyquest_device import PyquestDevice
 import pyquest_cffi as pqc
+
+from .pyquest_device import PyquestDevice
 from .utils import reorder_matrix, reorder_state
+
 
 class DensityQuregContext:
     def __init__(self, wires):
@@ -100,7 +102,13 @@ class PyquestMixed(PyquestDevice):
     def _init_state_vector(self, state, context):
         state = reorder_state(state)
         matrix = np.outer(state.conj(), state).ravel()
-        pqc.cheat.setDensityAmps()(qureg=context.qureg, startind=0, reals=np.real(matrix), imags=np.imag(matrix), numamps=len(matrix))
+        pqc.cheat.setDensityAmps()(
+            qureg=context.qureg,
+            startind=0,
+            reals=np.real(matrix),
+            imags=np.imag(matrix),
+            numamps=len(matrix),
+        )
 
     def _extract_information(self, context):
         self._density_matrix = reorder_matrix(pqc.cheat.getDensityMatrix()(context.qureg))

@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Tests that application of operations works correctly in the plugin devices"""
-import pytest
-
 import numpy as np
 import pennylane as qml
+import pytest
 from scipy.linalg import block_diag
 
-from conftest import U, A
+from conftest import A, U
 
 np.random.seed(42)
 
@@ -96,9 +95,9 @@ class TestStateApply:
 
         expected = np.zeros([2 ** 4])
         expected[np.ravel_multi_index(state, [2] * 4)] = 1
-        
+
         res = dev.analytic_probability()
-            
+
         assert np.allclose(res, expected, **tol)
 
     def test_identity_basis_state(self, device, tol):
@@ -153,7 +152,7 @@ class TestStateApply:
         dev.apply([qml.QubitStateVector(state, wires=[0]), name(theta, wires=[0])])
         dev._obs_queue = []
         dev.pre_measure()
-        
+
         res = dev.analytic_probability()
         expected = np.abs(func(theta) @ state) ** 2
         assert np.allclose(res, expected, **tol)
@@ -193,9 +192,7 @@ class TestStateApply:
         dev = device(2)
         state = init_state(2)
 
-        dev.apply(
-            [qml.QubitStateVector(state, wires=[0, 1]), name(theta, wires=[0, 1])]
-        )
+        dev.apply([qml.QubitStateVector(state, wires=[0, 1]), name(theta, wires=[0, 1])])
         dev._obs_queue = []
         dev.pre_measure()
 

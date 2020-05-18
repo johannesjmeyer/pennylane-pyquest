@@ -12,13 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Tests that exectation values are correctly computed in the plugin devices"""
-import pytest
-
 import numpy as np
 import pennylane as qml
+import pytest
 
-from conftest import U, U2, A
-
+from conftest import U2, A, U
 
 np.random.seed(42)
 
@@ -33,9 +31,7 @@ class TestExpval:
         phi = 0.123
 
         dev = device(2)
-        dev.apply(
-            [qml.RX(theta, wires=[0]), qml.RX(phi, wires=[1]), qml.CNOT(wires=[0, 1])]
-        )
+        dev.apply([qml.RX(theta, wires=[0]), qml.RX(phi, wires=[1]), qml.CNOT(wires=[0, 1])])
 
         O = qml.Identity
         name = "Identity"
@@ -53,14 +49,10 @@ class TestExpval:
         name = "PauliZ"
 
         dev = device(2)
-        dev.apply(
-            [qml.RX(theta, wires=[0]), qml.RX(phi, wires=[1]), qml.CNOT(wires=[0, 1])]
-        )
+        dev.apply([qml.RX(theta, wires=[0]), qml.RX(phi, wires=[1]), qml.CNOT(wires=[0, 1])])
         res = np.array([dev.expval(O(wires=[0])), dev.expval(O(wires=[1]))])
 
-        assert np.allclose(
-            res, np.array([np.cos(theta), np.cos(theta) * np.cos(phi)]), **tol
-        )
+        assert np.allclose(res, np.array([np.cos(theta), np.cos(theta) * np.cos(phi)]), **tol)
 
     def test_paulix_expectation(self, device, shots, tol):
         """Test that PauliX expectation value is correct"""
@@ -78,9 +70,7 @@ class TestExpval:
 
         res = np.array([dev.expval(O(wires=[0])), dev.expval(O(wires=[1]))])
 
-        assert np.allclose(
-            res, np.array([np.sin(theta) * np.sin(phi), np.sin(phi)]), **tol
-        )
+        assert np.allclose(res, np.array([np.sin(theta) * np.sin(phi), np.sin(phi)]), **tol)
 
     def test_pauliy_expectation(self, device, shots, tol):
         """Test that PauliY expectation value is correct"""
@@ -142,12 +132,8 @@ class TestExpval:
         a = A[0, 0]
         re_b = A[0, 1].real
         d = A[1, 1]
-        ev1 = (
-            (a - d) * np.cos(theta) + 2 * re_b * np.sin(theta) * np.sin(phi) + a + d
-        ) / 2
-        ev2 = (
-            (a - d) * np.cos(theta) * np.cos(phi) + 2 * re_b * np.sin(phi) + a + d
-        ) / 2
+        ev1 = ((a - d) * np.cos(theta) + 2 * re_b * np.sin(theta) * np.sin(phi) + a + d) / 2
+        ev2 = ((a - d) * np.cos(theta) * np.cos(phi) + 2 * re_b * np.sin(phi) + a + d) / 2
         expected = np.array([ev1, ev2])
 
         assert np.allclose(res, expected, **tol)
@@ -209,18 +195,13 @@ class TestTensorExpval:
                 qml.CNOT(wires=[0, 1]),
                 qml.CNOT(wires=[1, 2]),
             ],
-            (qml.PauliX(wires=[0])
-            @ qml.PauliY(wires=[2])).diagonalizing_gates()
+            (qml.PauliX(wires=[0]) @ qml.PauliY(wires=[2])).diagonalizing_gates(),
         )
 
-        dev._obs_queue = [
-            qml.PauliX(wires=[0])
-            @ qml.PauliY(wires=[2])
-        ]
+        dev._obs_queue = [qml.PauliX(wires=[0]) @ qml.PauliY(wires=[2])]
         res = dev.pre_measure()
 
-        res = dev.expval(qml.PauliX(wires=[0])
-            @ qml.PauliY(wires=[2]))
+        res = dev.expval(qml.PauliX(wires=[0]) @ qml.PauliY(wires=[2]))
 
         expected = np.sin(theta) * np.sin(phi) * np.sin(varphi)
 
@@ -241,19 +222,13 @@ class TestTensorExpval:
                 qml.CNOT(wires=[0, 1]),
                 qml.CNOT(wires=[1, 2]),
             ],
-            (qml.PauliZ(wires=[0])
-            @ qml.Hadamard(wires=[1])
-            @ qml.PauliY(wires=[2])).diagonalizing_gates()
+            (
+                qml.PauliZ(wires=[0]) @ qml.Hadamard(wires=[1]) @ qml.PauliY(wires=[2])
+            ).diagonalizing_gates(),
         )
 
-        res = dev.expval(
-            qml.PauliZ(wires=[0])
-            @ qml.Hadamard(wires=[1])
-            @ qml.PauliY(wires=[2])
-        )
-        expected = -(
-            np.cos(varphi) * np.sin(phi) + np.sin(varphi) * np.cos(theta)
-        ) / np.sqrt(2)
+        res = dev.expval(qml.PauliZ(wires=[0]) @ qml.Hadamard(wires=[1]) @ qml.PauliY(wires=[2]))
+        expected = -(np.cos(varphi) * np.sin(phi) + np.sin(varphi) * np.cos(theta)) / np.sqrt(2)
 
         assert np.allclose(res, expected, **tol)
 
@@ -281,13 +256,11 @@ class TestTensorExpval:
                 qml.CNOT(wires=[0, 1]),
                 qml.CNOT(wires=[1, 2]),
             ],
-            (qml.PauliZ(wires=[0])
-            @ qml.Hermitian(A, wires=[1, 2])).diagonalizing_gates()
+            (qml.PauliZ(wires=[0]) @ qml.Hermitian(A, wires=[1, 2])).diagonalizing_gates(),
         )
 
-        res = dev.expval(qml.PauliZ(wires=[0])
-            @ qml.Hermitian(A, wires=[1, 2]))
-            
+        res = dev.expval(qml.PauliZ(wires=[0]) @ qml.Hermitian(A, wires=[1, 2]))
+
         expected = 0.5 * (
             -6 * np.cos(theta) * (np.cos(varphi) + 1)
             - 2 * np.sin(varphi) * (np.cos(theta) + np.sin(phi) - 2 * np.cos(phi))

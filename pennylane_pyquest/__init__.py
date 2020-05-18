@@ -15,7 +15,7 @@
 Plugin overview
 ===============
 """
-from .pyquest_pure import PyquestPure
-from .pyquest_mixed import PyquestMixed
 from ._version import __version__
 from .ops import *
+from .pyquest_mixed import PyquestMixed
+from .pyquest_pure import PyquestPure

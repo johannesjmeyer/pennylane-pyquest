@@ -40,8 +40,9 @@ Classes
 
 # we always import NumPy directly
 import numpy as np
-from .pyquest_device import PyquestDevice
 import pyquest_cffi as pqc
+
+from .pyquest_device import PyquestDevice
 from .utils import reorder_state
 
 
@@ -64,7 +65,7 @@ class PyquestPure(PyquestDevice):
     operations = {
         "BasisState",
         "QubitStateVector",
-        "QubitUnitary", # Theoretically supportable, but silently crashes due to C errors
+        "QubitUnitary",  # Theoretically supportable, but silently crashes due to C errors
         "PauliX",
         "PauliY",
         "PauliZ",

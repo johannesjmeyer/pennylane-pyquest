@@ -35,8 +35,9 @@ import itertools
 
 # we always import NumPy directly
 import numpy as np
-from pennylane import QubitDevice
 import pyquest_cffi as pqc
+from pennylane import QubitDevice
+
 from ._version import __version__
 from .pyquest_operation import _OPERATIONS
 from .utils import reorder_state
@@ -87,9 +88,7 @@ class PyquestDevice(QubitDevice):
                 if operation.name == "QubitStateVector":
                     self._init_state_vector(operation.parameters[0], context)
                 elif operation.name == "BasisState":
-                    state_int = int(
-                        "".join(str(x) for x in reversed(operation.parameters[0])), 2
-                    )
+                    state_int = int("".join(str(x) for x in reversed(operation.parameters[0])), 2)
                     pqc.cheat.initClassicalState()(context.qureg, state=state_int)
                 else:
                     _OPERATIONS[operation.name].apply(operation, context.qureg)

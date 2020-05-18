@@ -13,7 +13,11 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys, os, re
+import os
+import re
+import sys
+
+import pennylane_forest
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -60,7 +64,6 @@ add_module_names = False
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 
-import pennylane_forest
 
 # The full version, including alpha/beta/rc tags.
 release = pennylane_forest.__version__
@@ -242,13 +245,7 @@ latex_additional_files = ["macros.tex"]
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (
-        master_doc,
-        "PluginName.tex",
-        "PluginName Documentation",
-        "Xanadu Inc.",
-        "manual",
-    ),
+    (master_doc, "PluginName.tex", "PluginName Documentation", "Xanadu Inc.", "manual",),
 ]
 
 

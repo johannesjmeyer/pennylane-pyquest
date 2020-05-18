@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Tests for any plugin- or framework-specific behaviour of the plugin devices"""
+import numpy as np
+import pennylane as qml
 import pytest
 
-import numpy as np
 import pennylane_pyquest
 from pennylane_pyquest import PyquestPure
-import pennylane as qml
 
 U = np.array(
     [

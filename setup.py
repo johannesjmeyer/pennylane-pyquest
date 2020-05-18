@@ -13,8 +13,9 @@
 # limitations under the License.
 #!/usr/bin/env python3
 
-import sys
 import os
+import sys
+
 from setuptools import setup
 
 with open("pennylane_pyquest/_version.py") as f:

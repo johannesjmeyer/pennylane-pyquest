@@ -6,13 +6,15 @@
 
 #     http://www.apache.org/licenses/LICENSE-2.0
 
+import pennylane as qml
+
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import pyquest_cffi as pqc
-import pennylane as qml
+
 from .utils import reorder_matrix
 
 _PAULI_TO_INT_DICT = {"I": 0, "X": 1, "Y": 2, "Z": 3}
@@ -39,27 +41,14 @@ _OPERATIONS = {
     "Hadamard": PyquestOperation(
         lambda op, qureg: pqc.ops.hadamard()(qureg=qureg, qubit=op.wires[0])
     ),
-    "PauliX": PyquestOperation(
-        lambda op, qureg: pqc.ops.pauliX()(qureg=qureg, qubit=op.wires[0])
-    ),
-    "PauliY": PyquestOperation(
-        lambda op, qureg: pqc.ops.pauliY()(qureg=qureg, qubit=op.wires[0])
-    ),
-    "PauliZ": PyquestOperation(
-        lambda op, qureg: pqc.ops.pauliZ()(qureg=qureg, qubit=op.wires[0])
-    ),
-    "S": PyquestOperation(
-        lambda op, qureg: pqc.ops.sGate()(qureg=qureg, qubit=op.wires[0])
-    ),
-    "T": PyquestOperation(
-        lambda op, qureg: pqc.ops.tGate()(qureg=qureg, qubit=op.wires[0])
-    ),
+    "PauliX": PyquestOperation(lambda op, qureg: pqc.ops.pauliX()(qureg=qureg, qubit=op.wires[0])),
+    "PauliY": PyquestOperation(lambda op, qureg: pqc.ops.pauliY()(qureg=qureg, qubit=op.wires[0])),
+    "PauliZ": PyquestOperation(lambda op, qureg: pqc.ops.pauliZ()(qureg=qureg, qubit=op.wires[0])),
+    "S": PyquestOperation(lambda op, qureg: pqc.ops.sGate()(qureg=qureg, qubit=op.wires[0])),
+    "T": PyquestOperation(lambda op, qureg: pqc.ops.tGate()(qureg=qureg, qubit=op.wires[0])),
     "CompactUnitary": PyquestOperation(
         lambda op, qureg: pqc.ops.compactUnitary()(
-            qureg=qureg,
-            qubit=op.wires[0],
-            alpha=op.parameters[0],
-            beta=op.parameters[1],
+            qureg=qureg, qubit=op.wires[0], alpha=op.parameters[0], beta=op.parameters[1],
         )
     ),  # Custom
     "PhaseShift": PyquestOperation(
@@ -69,10 +58,7 @@ _OPERATIONS = {
     ),
     "RotateAroundAxis": PyquestOperation(
         lambda op, qureg: pqc.ops.rotateAroundAxis()(
-            qureg=qureg,
-            qubit=op.wires[0],
-            theta=op.parameters[0],
-            vector=op.parameters[1],
+            qureg=qureg, qubit=op.wires[0], theta=op.parameters[0], vector=op.parameters[1],
         )
     ),  # Custom
     "RotateAroundSphericalAxis": PyquestOperation(
@@ -85,25 +71,19 @@ _OPERATIONS = {
         )
     ),  # Custom
     "RX": PyquestOperation(
-        lambda op, qureg: pqc.ops.rotateX()(
-            qureg=qureg, qubit=op.wires[0], theta=op.parameters[0]
-        )
+        lambda op, qureg: pqc.ops.rotateX()(qureg=qureg, qubit=op.wires[0], theta=op.parameters[0])
     ),
     "RY": PyquestOperation(
-        lambda op, qureg: pqc.ops.rotateY()(
-            qureg=qureg, qubit=op.wires[0], theta=op.parameters[0]
-        )
+        lambda op, qureg: pqc.ops.rotateY()(qureg=qureg, qubit=op.wires[0], theta=op.parameters[0])
     ),
     "RZ": PyquestOperation(
-        lambda op, qureg: pqc.ops.rotateZ()(
-            qureg=qureg, qubit=op.wires[0], theta=op.parameters[0]
-        )
+        lambda op, qureg: pqc.ops.rotateZ()(qureg=qureg, qubit=op.wires[0], theta=op.parameters[0])
     ),
     "QubitUnitary": PyquestOperation(
         lambda op, qureg: pqc.ops.multiQubitUnitary()(
             qureg=qureg, targets=op.wires, matrix=reorder_matrix(op.parameters[0])
         )
-    ), 
+    ),
     "ControlledCompactUnitary": PyquestOperation(
         lambda op, qureg: pqc.ops.controlledCompactUnitary()(
             qureg=qureg,
@@ -129,9 +109,7 @@ _OPERATIONS = {
         )
     ),
     "SWAP": PyquestOperation(
-        lambda op, qureg: pqc.ops.swapGate()(
-            qureg=qureg, control=op.wires[0], qubit=op.wires[1],
-        )
+        lambda op, qureg: pqc.ops.swapGate()(qureg=qureg, control=op.wires[0], qubit=op.wires[1],)
     ),
     "SqrtSWAP": PyquestOperation(
         lambda op, qureg: pqc.ops.sqrtSwapGate()(
@@ -139,9 +117,7 @@ _OPERATIONS = {
         )
     ),  # Custom
     "SqrtISWAP": PyquestOperation(
-        lambda op, qureg: pqc.ops.sqrtISwap()(
-            qureg=qureg, control=op.wires[0], qubit=op.wires[1],
-        )
+        lambda op, qureg: pqc.ops.sqrtISwap()(qureg=qureg, control=op.wires[0], qubit=op.wires[1],)
     ),  # Custom
     "InvSqrtISWAP": PyquestOperation(
         lambda op, qureg: pqc.ops.invSqrtISwap()(
@@ -179,10 +155,7 @@ _OPERATIONS = {
     ),
     "ControlledUnitary": PyquestOperation(
         lambda op, qureg: pqc.ops.controlledUnitary()(
-            qureg=qureg,
-            control=op.wires[0],
-            qubit=op.wires[1],
-            matrix=op.parameters[0],
+            qureg=qureg, control=op.wires[0], qubit=op.wires[1], matrix=op.parameters[0],
         )
     ),  # Custom
     "MultiRZ": PyquestOperation(
