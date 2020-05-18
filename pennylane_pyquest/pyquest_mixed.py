@@ -40,7 +40,7 @@ Classes
 import numpy as np
 from .pyquest_device import PyquestDevice
 import pyquest_cffi as pqc
-
+from .utils import reorder_matrix
 
 class DensityQuregContext:
     def __init__(self, wires):
@@ -97,7 +97,7 @@ class PyquestMixed(PyquestDevice):
         return DensityQuregContext(self.num_wires)
 
     def _extract_information(self, context):
-        self._density_matrix = pqc.cheat.getDensityMatrix()(context.qureg)
+        self._density_matrix = reorder_matrix(pqc.cheat.getDensityMatrix()(context.qureg))
         self._probs = np.diag(self._density_matrix)
 
     @property
