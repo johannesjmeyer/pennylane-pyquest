@@ -35,13 +35,11 @@ class TestVar:
         phi = 0.543
         theta = 0.6543
 
+        O = qml.PauliZ(wires=[0])
+
         # test correct variance for <Z> of a rotated state
         dev.apply([qml.RX(phi, wires=[0]), qml.RY(theta, wires=[0])])
-
-        dev._obs_queue = [qml.PauliZ(wires=[0])]
-        dev.pre_measure()
-
-        var = dev.var("PauliZ", [0], [])
+        var = dev.var(O)
         expected = 0.25 * (
             3 - np.cos(2 * theta) - 2 * np.cos(theta) ** 2 * np.cos(2 * phi)
         )
@@ -58,12 +56,11 @@ class TestVar:
 
         # test correct variance for <H> of a rotated state
         H = np.array([[4, -1 + 6j], [-1 - 6j, 2]])
-        dev.apply([qml.RX(phi, wires=[0]), qml.RY(theta, wires=[0])])
+        O = qml.Hermitian(H, wires=[0])
 
-        dev._obs_queue = [qml.Hermitian(H, wires=[0])]
-        dev.pre_measure()
+        dev.apply([qml.RX(phi, wires=[0]), qml.RY(theta, wires=[0])], O.diagonalizing_gates())
 
-        var = dev.var("Hermitian", [0], [H])
+        var = dev.var(O)
         expected = 0.5 * (
             2 * np.sin(2 * theta) * np.cos(phi) ** 2
             + 24 * np.sin(phi) * np.cos(phi) * (np.sin(theta) - np.cos(theta))
@@ -84,6 +81,8 @@ class TestTensorVar:
         phi = 0.123
         varphi = -0.543
 
+        O = qml.PauliX(wires=[0]) @ qml.PauliY(wires=[2])
+
         dev = device(3)
         dev.apply(
             [
@@ -92,16 +91,10 @@ class TestTensorVar:
                 qml.RX(varphi, wires=[2]),
                 qml.CNOT(wires=[0, 1]),
                 qml.CNOT(wires=[1, 2]),
-            ]
+            ],
+            O.diagonalizing_gates()
         )
-
-        dev._obs_queue = [
-            qml.PauliX(wires=[0])
-            @ qml.PauliY(wires=[2])
-        ]
-        res = dev.pre_measure()
-
-        res = dev.var(["PauliX", "PauliY"], [[0], [2]], [[], [], []])
+        res = dev.var(O)
 
         expected = (
             8 * np.sin(theta) ** 2 * np.cos(2 * varphi) * np.sin(phi) ** 2
@@ -120,6 +113,8 @@ class TestTensorVar:
         phi = 0.123
         varphi = -0.543
 
+        O = qml.PauliZ(wires=[0]) @ qml.Hadamard(wires=[1]) @ qml.PauliY(wires=[2])
+
         dev = device(3)
         dev.apply(
             [
@@ -128,17 +123,10 @@ class TestTensorVar:
                 qml.RX(varphi, wires=[2]),
                 qml.CNOT(wires=[0, 1]),
                 qml.CNOT(wires=[1, 2]),
-            ]
+            ],
+            O.diagonalizing_gates()
         )
-
-        dev._obs_queue = [
-            qml.PauliZ(wires=[0])
-            @ qml.Hadamard(wires=[1])
-            @ qml.PauliY(wires=[2])
-        ]
-        res = dev.pre_measure()
-
-        res = dev.var(["PauliZ", "Hadamard", "PauliY"], [[0], [1], [2]], [[], [], []])
+        res = dev.var(O)
 
         expected = (
             3
@@ -155,17 +143,6 @@ class TestTensorVar:
         phi = 0.123
         varphi = -0.543
 
-        dev = device(3)
-        dev.apply(
-            [
-                qml.RX(theta, wires=[0]),
-                qml.RX(phi, wires=[1]),
-                qml.RX(varphi, wires=[2]),
-                qml.CNOT(wires=[0, 1]),
-                qml.CNOT(wires=[1, 2]),
-            ]
-        )
-
         A = np.array(
             [
                 [-6, 2 + 1j, -3, -5 + 2j],
@@ -175,13 +152,21 @@ class TestTensorVar:
             ]
         )
 
-        dev._obs_queue = [
-            qml.PauliZ(wires=[0])
-            @ qml.Hermitian(A, wires=[1, 2])
-        ]
-        res = dev.pre_measure()
+        O = qml.PauliZ(wires=[0]) @ qml.Hermitian(A, wires=[1, 2])
 
-        res = dev.var(["PauliZ", "Hermitian"], [[0], [1, 2]], [[], [A]])
+        dev = device(3)
+        dev.apply(
+            [
+                qml.RX(theta, wires=[0]),
+                qml.RX(phi, wires=[1]),
+                qml.RX(varphi, wires=[2]),
+                qml.CNOT(wires=[0, 1]),
+                qml.CNOT(wires=[1, 2]),
+            ],
+            O.diagonalizing_gates()
+        )
+
+        res = dev.var(O)
 
         expected = (
             1057
