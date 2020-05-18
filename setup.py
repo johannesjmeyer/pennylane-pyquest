@@ -29,30 +29,23 @@ requirements = ["pennylane"]
 
 info = {
     # 'name' is the name that will be used by pip for installation
-    "name": "Plugin-Name",
+    "name": "Pennylane-Pyquest",
     "version": version,
-    "maintainer": "Xanadu Inc.",
-    "maintainer_email": "name@xanadu.ai",
-    "url": "http://xanadu.ai",
+    "maintainer": "Johannes Jakob Meyer",
+    "maintainer_email": "johannes.meyer@fu-berlin.de",
+    "url": "http://www.github.com/johannesjmeyer/pennylane-pyquest",
     "license": "Apache License 2.0",
     "packages": [
-        # The name of the folder containing the plugin.
-        # This is the name that will be used when importing
-        # the plugin in Python.
         "pennylane_pyquest"
     ],
     "entry_points": {
         "pennylane.plugins": [
-            # List the short name of each device provided by
-            # the plugin, as well as the path to the Device class
-            # it corresponds to in the plugin. This allows
-            # the device to be imported automatically via the
-            # `pennylane.device` device loader.
-            "pluginname.devicename = pennylane_pyquest:DeviceClass"
+            "pyquest.pure = pennylane_pyquest:PyquestPure",
+            "pyquest.mixed = pennylane_pyquest:PyquestMixed",
         ]
     },
     # Place a one line description here. This will be shown by pip
-    "description": "Plugin description",
+    "description": "QuEST plugin for PennyLane, based on Pyquest-cffi",
     "long_description": open("README.rst").read(),
     # The name of the folder containing the plugin
     "provides": ["pennylane_pyquest"],
