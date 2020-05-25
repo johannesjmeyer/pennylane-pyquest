@@ -25,7 +25,7 @@ with open("pennylane_pyquest/_version.py") as f:
 # Requirements should be as minimal as possible.
 # Avoid pinning, and use minimum version numbers
 # only where required.
-requirements = ["pennylane"]
+requirements = ["pennylane", "pyquest-cffi"]
 
 info = {
     # 'name' is the name that will be used by pip for installation
