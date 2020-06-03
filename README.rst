@@ -1,14 +1,8 @@
 PennyLane PyQuest Plugin
 #########################
 
-This template repository provides the boilerplate and file structure required to easily create your
-own PennyLane plugin.
-
-See the `PennyLane Developer API documentation <https://pennylane.readthedocs.io/en/latest/API/overview.html>`_
-for more details on developing a PennyLane plugin.
-
 `PyQuest-cffi <https://pyquest.readthedocs.io>`_ is a Python library that connects to the high-performance mixed
-state simulator Quest.
+state simulator `QuEST <https://github.com/quest-kit/QuEST>`_.
 
 `PennyLane <https://pennylane.readthedocs.io>`_ is a machine learning library for optimization
 and automatic differentiation of hybrid quantum-classical computations.
@@ -27,7 +21,8 @@ Getting started
 ===============
 
 Once PennyLane-PyQuest is installed, the provided PyQuest-cffi devices can be accessed straight
-away in PennyLane.
+away in PennyLane. The plugin provides both a pure state and a mixed state simulator based on
+QuEST.
 
 You can instantiate these devices for PennyLane as follows:
 
@@ -48,23 +43,15 @@ Contributing
 
 We welcome contributions - simply fork the PennyLane-PyQuest repository, and then make a
 `pull request <https://help.github.com/articles/about-pull-requests/>`_ containing your contribution.
-All contributers to PennyLane-SF will be listed as authors on the releases.
+All contributers to PennyLane-PyQuest will be listed as authors on the releases.
 
-We also encourage bug reports, suggestions for new features and enhancements, and even links to cool
-projects or applications built on PennyLane and PyQuest-cffi.
+We also encourage bug reports, suggestions for new features and enhancements.
 
 
 Authors
 =======
 
 Johannes Jakob Meyer.
-
-If you are doing research using PennyLane, please cite our papers:
-
-    Bergholm et al.,
-    *PennyLane: Automatic differentiation of hybrid quantum-classical computations.* 2018.
-    `arXiv:1811.04968 <https://arxiv.org/abs/1811.04968>`_
-
 
 Support
 =======
