@@ -53,6 +53,22 @@ crz = lambda theta: np.array(
         [0, 0, 0, np.exp(1j * theta / 2)],
     ]
 )
+crx = lambda theta: np.array(
+    [
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, np.cos(theta/2), -1j * np.sin(theta/2)],
+        [0, 0, -1j * np.sin(theta/2), np.cos(theta/2)],
+    ]
+)
+cry = lambda theta: np.array(
+    [
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, np.cos(theta/2), -np.sin(theta/2)],
+        [0, 0, np.sin(theta/2), np.cos(theta/2)],
+    ]
+)
 
 # list of all non-parametrized single-qubit gates,
 # along with the PennyLane operation name
@@ -75,7 +91,7 @@ single_qubit_param = [
 # list of all non-parametrized two-qubit gates
 two_qubit = [(qml.CNOT, CNOT), (qml.SWAP, SWAP), (qml.CZ, CZ)]
 # list of all parametrized two-qubit gates
-two_qubit_param = [(qml.CRZ, crz)]
+two_qubit_param = [(qml.CRZ, crz), (qml.CRY, cry), (qml.CRX, crx)]
 # list of all three-qubit gates
 three_qubit = []
 
@@ -187,7 +203,7 @@ class TestStateApply:
 
     @pytest.mark.parametrize("theta", [0.5432, -0.232])
     @pytest.mark.parametrize("name,func", two_qubit_param)
-    def test_single_qubit_parameters(self, init_state, device, name, func, theta, tol):
+    def test_two_qubit_parameters(self, init_state, device, name, func, theta, tol):
         """Test PauliX application"""
         dev = device(2)
         state = init_state(2)
