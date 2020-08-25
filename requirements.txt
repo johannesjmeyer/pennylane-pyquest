@@ -1,2 +1,2 @@
-pennylane>=0.8
+pennylane>=0.11
 pyquest-cffi
