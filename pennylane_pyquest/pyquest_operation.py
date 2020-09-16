@@ -155,7 +155,7 @@ _OPERATIONS = {
     ),
     "ControlledUnitary": PyquestOperation(
         lambda op, qureg: pqc.ops.controlledUnitary()(
-            qureg=qureg, control=op.wires.toarray()[0], qubit=op.wires.toarray()[1], matrix=op.parameters[0],
+            qureg=qureg, control=op.wires.toarray()[0], qubit=op.wires.toarray()[1], matrix=reorder_matrix(op.parameters[0]),
         )
     ),  # Custom
     "MultiRZ": PyquestOperation(
